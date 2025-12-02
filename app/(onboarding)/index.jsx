@@ -62,7 +62,7 @@ const OnboardingScreen = () => {
     // await AsyncStorage.setItem('hasOnboarded', 'true');
     
     // Navigate out of the onboarding group to your sign-in/auth group
-    router.replace('/(auth)/sign-in'); 
+    router.replace('/(auth)/AuthScreen'); 
   };
 
   const scrollToNext = () => {

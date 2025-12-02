@@ -1,67 +1,153 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Tabs, useSegments } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 
-// Use a common color for the active tab icon
-const TINT_COLOR = '#008080'; 
+const TINT_COLOR = '#008080';
 
 export default function TabLayout() {
+    const segments = useSegments();  // ← Get current route segments
+
+  // Hide tab bar on these screens
+  const hideTabBar = segments.includes("Chat");  // ← For ChatScreen
   return (
-    <Tabs screenOptions={{ 
-      headerShown: false, // Hide the header for all screens within the tabs
-      tabBarActiveTintColor: TINT_COLOR,
-      tabBarInactiveTintColor: '#999',
-      tabBarStyle: {
-        height: 60, // Give the tab bar a little more space
-        paddingBottom: 5,
-      }
-    }}>
-      
-      {/* 1. Home Tab */}
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: TINT_COLOR,
+        tabBarInactiveTintColor: '#999',
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+          textTransform: 'capitalize',
+        },
+
+        /** 🔥 FIX: Keep tab bar height stable */
+        tabBarStyle: {
+          height: 70,
+          borderTopWidth: 1,
+          borderTopColor: '#E0E0E0',
+          backgroundColor: '#fff',
+          display: hideTabBar ? 'none' : 'flex',
+        },
+        tabBarItemStyle: {
+          paddingTop: 8,
+          paddingBottom: 10,
+        },
+
+        /** Prevent layout resets */
+        tabBarHideOnKeyboard: false,
+
+        // We define icons manually per tab
+        tabBarIcon: () => null,
+      }}
+    >
+      {/* Home */}
       <Tabs.Screen
         name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <Ionicons name="home-outline" size={24} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.iconContainer}>
+              {focused && <View style={styles.activeLine} />}
+              <Ionicons
+                name={focused ? 'home' : 'home-outline'}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
-      
-      {/* 2. Order Tab */}
+
+      {/* Order */}
       <Tabs.Screen
         name="order"
         options={{
           title: 'Order',
-          tabBarIcon: ({ color }) => <Ionicons name="cart-outline" size={24} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.iconContainer}>
+              {focused && <View style={styles.activeLine} />}
+              <Ionicons
+                name={focused ? 'cart' : 'cart-outline'}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
-      
-      {/* 3. Travel Tab */}
+
+      {/* Travel */}
       <Tabs.Screen
         name="travel"
         options={{
           title: 'Travel',
-          tabBarIcon: ({ color }) => <Ionicons name="airplane-outline" size={24} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.iconContainer}>
+              {focused && <View style={styles.activeLine} />}
+              <Ionicons
+                name={focused ? 'airplane' : 'airplane-outline'}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
-      
-      {/* 4. Inbox Tab */}
+
+      {/* Inbox */}
       <Tabs.Screen
         name="inbox"
         options={{
           title: 'Inbox',
-          tabBarIcon: ({ color }) => <Ionicons name="mail-outline" size={24} color={color} />,
-          tabBarBadge: 3, // Example of a badge for new messages
+          tabBarBadge: 3,
+          tabBarBadgeStyle: { backgroundColor: TINT_COLOR },
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.iconContainer}>
+              {focused && <View style={styles.activeLine} />}
+              <Ionicons
+                name={focused ? 'mail' : 'mail-outline'}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
 
-      {/* 5. Settings Tab */}
+      {/* Settings */}
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={24} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.iconContainer}>
+              {focused && <View style={styles.activeLine} />}
+              <Ionicons
+                name={focused ? 'settings' : 'settings-outline'}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
-      
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+  },
+  activeLine: {
+    position: 'absolute',
+    top: -8,
+    height: 3,
+    width: 30,
+    backgroundColor: TINT_COLOR,
+    borderRadius: 2,
+  },
+});

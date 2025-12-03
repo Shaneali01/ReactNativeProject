@@ -3,22 +3,25 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import ProductDetailsModal from "../../components/home/ProductDetails";
+
+// Import the modal component
 
 const TEAL = "#008080";
 
-// THIS IS THE REQUIRED DEFAULT EXPORT
 export default function OrderSummary() {
   const [paymentAdded, setPaymentAdded] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <KeyboardAvoidingView
@@ -35,7 +38,7 @@ export default function OrderSummary() {
       </View>
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Product Card */}
+        {/* Your existing content (unchanged) */}
         <View style={styles.productCard}>
           <Image
             source={{ uri: "https://via.placeholder.com/80" }}
@@ -44,14 +47,15 @@ export default function OrderSummary() {
           <View style={styles.productInfo}>
             <Text style={styles.productName}>iPhone 15 Pro Max</Text>
             <Text style={styles.productDate}>Date: 4 July 2025</Text>
-
             <View style={styles.routeContainer}>
               <View style={styles.flagBox}>
                 <Text style={styles.flagText}>USA</Text>
               </View>
               <View style={styles.dottedLine} />
               <View style={styles.flagBox}>
-                <Text style={[styles.flagText, { backgroundColor: TEAL }]}>Pakistan</Text>
+                <Text style={[styles.flagText, { backgroundColor: TEAL }]}>
+                  Pakistan
+                </Text>
               </View>
             </View>
             <Text style={styles.quantity}>Quantity: 1</Text>
@@ -59,7 +63,6 @@ export default function OrderSummary() {
           <Text style={styles.productPrice}>$100</Text>
         </View>
 
-        {/* Price Summary */}
         <Text style={styles.sectionTitle}>Price Summary</Text>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Product Price</Text>
@@ -83,8 +86,12 @@ export default function OrderSummary() {
           <Text style={styles.totalAmount}>$139.59</Text>
         </View>
 
-        {/* Big Toggle */}
-        <View style={[styles.paymentRowBig, paymentAdded && styles.paymentRowActive]}>
+        <View
+          style={[
+            styles.paymentRowBig,
+            paymentAdded && styles.paymentRowActive,
+          ]}
+        >
           <View>
             <Text style={styles.paymentLabelBig}>Add Payment Method</Text>
             <Text style={styles.paymentHint}>Required to complete order</Text>
@@ -102,22 +109,31 @@ export default function OrderSummary() {
         <View style={{ height: 120 }} />
       </ScrollView>
 
-      {/* Request Button */}
+      {/* Bottom Button */}
       <View style={styles.bottomButtonContainer}>
-        <TouchableOpacity style={styles.requestButton}>
+        <TouchableOpacity
+          style={styles.requestButton}
+          onPress={() => setModalVisible(true)}
+        >
           <Text style={styles.requestButtonText}>Request Delivery Offer</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal - Clean & Reusable */}
+      <ProductDetailsModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </KeyboardAvoidingView>
   );
 }
 
-// Styles
+// Your existing styles (unchanged)
 const styles = StyleSheet.create({
   header: {
     backgroundColor: TEAL,
     height: 170,
-    paddingTop: 10,
+    paddingTop: 50,
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
@@ -150,13 +166,28 @@ const styles = StyleSheet.create({
   productInfo: { flex: 1 },
   productName: { fontSize: 15, fontWeight: "bold", color: "#333" },
   productDate: { fontSize: 11, color: "#999", marginTop: 2 },
-  routeContainer: { flexDirection: "row", alignItems: "center", marginVertical: 8 },
-  flagBox: { backgroundColor: "#333", paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
+  routeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 8,
+  },
+  flagBox: {
+    backgroundColor: "#333",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
   flagText: { color: "#fff", fontSize: 10, fontWeight: "600" },
-  dottedLine: { flex: 1, height: 1, borderTopWidth: 2, borderTopColor: "#ccc", borderStyle: "dotted", marginHorizontal: 10 },
+  dottedLine: {
+    flex: 1,
+    height: 1,
+    borderTopWidth: 2,
+    borderTopColor: "#ccc",
+    borderStyle: "dotted",
+    marginHorizontal: 10,
+  },
   quantity: { fontSize: 12, color: "#666" },
   productPrice: { fontSize: 18, fontWeight: "bold", color: TEAL },
-
   sectionTitle: {
     marginTop: 10,
     marginBottom: 10,
@@ -166,10 +197,13 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
-  priceRow: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 8 },
+  priceRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+  },
   priceLabel: { fontSize: 13, color: "#666" },
   priceValue: { fontSize: 13, fontWeight: "600", color: "#333" },
-
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -180,7 +214,6 @@ const styles = StyleSheet.create({
   },
   totalLabel: { fontSize: 15, fontWeight: "bold", color: "#333" },
   totalAmount: { fontSize: 18, fontWeight: "bold", color: TEAL },
-
   paymentRowBig: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -193,15 +226,10 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#eee",
   },
-  paymentRowActive: {
-    borderColor: TEAL,
-  },
+  paymentRowActive: { borderColor: TEAL },
   paymentLabelBig: { fontSize: 15, fontWeight: "bold", color: "#333" },
   paymentHint: { fontSize: 11, color: "#666", marginTop: 2 },
-  bigSwitch: {
-    transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
-  },
-
+  bigSwitch: { transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] },
   bottomButtonContainer: {
     paddingHorizontal: 20,
     paddingVertical: 12,

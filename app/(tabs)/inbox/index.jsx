@@ -2,13 +2,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const TEAL = "#008080";
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: TEAL,
     height: 170,
-    paddingTop: 50,
+    paddingTop: 10,
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 2,
     borderRadius: 30,
     borderWidth: 1,
     borderColor: "#ddd",
@@ -128,13 +128,14 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 12,
     color: "#333",
   },
 
   chatItem: {
     flexDirection: "row",
     padding: 16,
+    paddingLeft:2,
     marginHorizontal: 20,
     marginTop: 12,
     backgroundColor: "#fff",

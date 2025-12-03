@@ -3,16 +3,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
-    Image,
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const TEAL = "#008080";
@@ -58,7 +58,7 @@ export default function ChatScreen() {
           <View style={styles.productCardWrapper}>
             <View style={styles.productCard}>
               <Image
-                source={{ uri: "https://via.placeholder.com/120x120/222/fff?text=iPhone" }}
+                source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbbPE8c7mhKZPFQMciGp1GumwMBv_Knv86Ug&s" }}
                 style={styles.productImage}
               />
               <View style={{ flex: 1, marginLeft: 12 }}>

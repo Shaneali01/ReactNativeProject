@@ -1,27 +1,31 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useSegments } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 const TINT_COLOR = '#008080';
+const INACTIVE_COLOR = '#999';
+
+// Your single icons (no active version needed)
+import HomeIcon from '../../assets/images/Home.png';
+import InboxIcon from '../../assets/images/Inbox.png';
+import OrderIcon from '../../assets/images/Order.png';
+import SettingsIcon from '../../assets/images/Setting.png';
+import TravelIcon from '../../assets/images/Travel.png';
 
 export default function TabLayout() {
-    const segments = useSegments();  // ← Get current route segments
+  const segments = useSegments();
+  const hideTabBar = segments.includes('Chat');
 
-  // Hide tab bar on these screens
-  const hideTabBar = segments.includes("Chat");  // ← For ChatScreen
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: TINT_COLOR,
-        tabBarInactiveTintColor: '#999',
+        tabBarInactiveTintColor: INACTIVE_COLOR,
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '600',
           textTransform: 'capitalize',
         },
-
-        /** 🔥 FIX: Keep tab bar height stable */
         tabBarStyle: {
           height: 70,
           borderTopWidth: 1,
@@ -33,11 +37,7 @@ export default function TabLayout() {
           paddingTop: 8,
           paddingBottom: 10,
         },
-
-        /** Prevent layout resets */
         tabBarHideOnKeyboard: false,
-
-        // We define icons manually per tab
         tabBarIcon: () => null,
       }}
     >
@@ -46,13 +46,16 @@ export default function TabLayout() {
         name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
               {focused && <View style={styles.activeLine} />}
-              <Ionicons
-                name={focused ? 'home' : 'home-outline'}
-                size={24}
-                color={color}
+              <Image
+                source={HomeIcon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? TINT_COLOR : INACTIVE_COLOR },
+                ]}
+                resizeMode="contain"
               />
             </View>
           ),
@@ -64,13 +67,16 @@ export default function TabLayout() {
         name="order"
         options={{
           title: 'Order',
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
               {focused && <View style={styles.activeLine} />}
-              <Ionicons
-                name={focused ? 'cart' : 'cart-outline'}
-                size={24}
-                color={color}
+              <Image
+                source={OrderIcon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? TINT_COLOR : INACTIVE_COLOR },
+                ]}
+                resizeMode="contain"
               />
             </View>
           ),
@@ -82,13 +88,16 @@ export default function TabLayout() {
         name="travel"
         options={{
           title: 'Travel',
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
               {focused && <View style={styles.activeLine} />}
-              <Ionicons
-                name={focused ? 'airplane' : 'airplane-outline'}
-                size={24}
-                color={color}
+              <Image
+                source={TravelIcon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? TINT_COLOR : INACTIVE_COLOR },
+                ]}
+                resizeMode="contain"
               />
             </View>
           ),
@@ -102,13 +111,16 @@ export default function TabLayout() {
           title: 'Inbox',
           tabBarBadge: 3,
           tabBarBadgeStyle: { backgroundColor: TINT_COLOR },
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
               {focused && <View style={styles.activeLine} />}
-              <Ionicons
-                name={focused ? 'mail' : 'mail-outline'}
-                size={24}
-                color={color}
+              <Image
+                source={InboxIcon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? TINT_COLOR : INACTIVE_COLOR },
+                ]}
+                resizeMode="contain"
               />
             </View>
           ),
@@ -120,13 +132,16 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
               {focused && <View style={styles.activeLine} />}
-              <Ionicons
-                name={focused ? 'settings' : 'settings-outline'}
-                size={24}
-                color={color}
+              <Image
+                source={SettingsIcon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? TINT_COLOR : INACTIVE_COLOR },
+                ]}
+                resizeMode="contain"
               />
             </View>
           ),
@@ -141,6 +156,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 60,
+  },
+  icon: {
+    width: 26,
+    height: 26,
   },
   activeLine: {
     position: 'absolute',

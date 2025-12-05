@@ -3,12 +3,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const TEAL = "#008080";
@@ -163,8 +163,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: TEAL,
     height: 170,
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    paddingTop: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

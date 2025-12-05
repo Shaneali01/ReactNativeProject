@@ -1,15 +1,69 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { FlatList, Image, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'; // <-- Added Platform import here
+import {
+    FlatList,
+    Image,
+    Platform,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 
 // Sample data for the list
 const orderData = [
-    { id: '1', title: 'iPhone 15 Pro Max', price: '$139.59', date: '24 July 2025', quantity: 1, from: 'USA 🇺🇸', to: 'Pakistan 🇵🇰', image: 'https://picsum.photos/id/40/100/100' },
-    { id: '2', title: 'Smart Watch', price: '$139.59', date: '24 July 2025', quantity: 1, from: 'USA 🇺🇸', to: 'Pakistan 🇵🇰', image: 'https://picsum.photos/id/65/100/100' },
-    { id: '3', title: 'Headphones', price: '$139.59', date: '24 July 2025', quantity: 1, from: 'USA 🇺🇸', to: 'Pakistan 🇵🇰', image: 'https://picsum.photos/id/237/100/100' },
-    { id: '4', title: 'Nike Shoes', price: '$139.59', date: '24 July 2025', quantity: 1, from: 'USA 🇺🇸', to: 'Pakistan 🇵🇰', image: 'https://picsum.photos/id/83/100/100' },
-    { id: '5', title: 'Camera Lens', price: '$139.59', date: '24 July 2025', quantity: 1, from: 'USA 🇺🇸', to: 'Pakistan 🇵🇰', image: 'https://picsum.photos/id/88/100/100' },
+    { 
+        id: '1', 
+        title: 'iPhone 15 Pro Max', 
+        price: '$139.59', 
+        date: '24 July 2025', 
+        quantity: 1, 
+        from: 'USA', 
+        fromFlag: '🇺🇸', 
+        to: 'Pakistan', 
+        toFlag: '🇵🇰', 
+        image: 'https://images.unsplash.com/photo-1592286927505-b0e2967ddc93?w=200' 
+    },
+    { 
+        id: '2', 
+        title: 'Smart Watch', 
+        price: '$139.59', 
+        date: '24 July 2025', 
+        quantity: 1, 
+        from: 'USA', 
+        fromFlag: '🇺🇸', 
+        to: 'Pakistan', 
+        toFlag: '🇵🇰', 
+        image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=200' 
+    },
+    { 
+        id: '3', 
+        title: 'Headphones', 
+        price: '$139.59', 
+        date: '24 July 2025', 
+        quantity: 1, 
+        from: 'USA', 
+        fromFlag: '🇺🇸', 
+        to: 'Pakistan', 
+        toFlag: '🇵🇰', 
+        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200' 
+    },
+    { 
+        id: '4', 
+        title: 'Nike Shoes', 
+        price: '$139.59', 
+        date: '24 July 2025', 
+        quantity: 1, 
+        from: 'USA', 
+        fromFlag: '🇺🇸', 
+        to: 'Pakistan', 
+        toFlag: '🇵🇰', 
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200' 
+    },
 ];
 
 const OrderScreen = () => {
@@ -19,24 +73,32 @@ const OrderScreen = () => {
     // --- List Item Renderer ---
     const renderItem = ({ item }) => (
         <View style={styles.card}>
-            {/* The image component should have a fallback style in case the URI fails or loads slowly */}
             <Image 
                 source={{ uri: item.image }} 
                 style={styles.cardImage} 
                 accessibilityLabel={`Image of ${item.title}`}
             />
             <View style={styles.cardDetails}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                <Text style={styles.cardSubtitle}>Date: {item.date}</Text>
-                <View style={styles.travelRoute}>
-                    <Text style={styles.routeText}>{item.from}</Text>
-                    <Ionicons name="airplane" size={12} color="#008080" style={{ marginHorizontal: 5 }} />
-                    <Text style={styles.routeText}>{item.to}</Text>
+                <View style={styles.titleRow}>
+                    <Text style={styles.cardTitle}>{item.title}</Text>
+                    <Text style={styles.cardPrice}>{item.price}</Text>
                 </View>
-            </View>
-            <View style={styles.cardPriceContainer}>
-                <Text style={styles.cardPrice}>{item.price}</Text>
-                <Text style={styles.cardSubtitle}>Quantity: {item.quantity}</Text>
+                <View style={styles.new}>
+                    <Text style={styles.cardDate}>Date: {item.date}</Text>
+                <Text style={styles.quantity}>Quantity: {item.quantity}</Text>
+
+                </View>
+                <View style={styles.bottomRow}>
+                    <View style={styles.travelRoute}>
+                        <Text style={styles.routeText}>{item.from}</Text>
+                        <Text style={styles.flag}>{item.fromFlag}</Text>
+                        <Text style={styles.dashes}>- - - - - </Text>
+                        <Ionicons name="airplane" size={14} color="#008080" />
+                        <Text style={styles.dashes}>- - - - - &gt;</Text>
+                        <Text style={styles.routeText}>{item.to}</Text>
+                        <Text style={styles.flag}>{item.toFlag}</Text>
+                    </View>
+                </View>
             </View>
         </View>
     );
@@ -76,10 +138,10 @@ const OrderScreen = () => {
             <View style={styles.contentArea}>
                 {/* Search Bar */}
                 <View style={styles.searchBarContainer}>
-                    <Ionicons name="search" size={20} color="#999" style={styles.searchIcon} />
+                    <Ionicons name="search" size={18} color="#999" style={styles.searchIcon} />
                     <TextInput
                         style={styles.searchInput}
-                        placeholder={`Search ${activeTab === 'Orders' ? 'Orders' : 'Travels'}...`}
+                        placeholder="Search"
                         placeholderTextColor="#999"
                         value={searchText}
                         onChangeText={setSearchText}
@@ -87,14 +149,13 @@ const OrderScreen = () => {
                         accessibilityLabel="Search input"
                     />
                     <TouchableOpacity style={styles.filterButton} accessibilityLabel="Filter button">
-                        <Ionicons name="filter" size={24} color="#008080" />
+                        <Ionicons name="options-outline" size={20} color="#999" />
                     </TouchableOpacity>
                 </View>
 
-
                 {/* Orders List */}
                 <FlatList
-                    data={orderData} // In a real app, this would be filtered by activeTab
+                    data={orderData}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.listContent}
@@ -108,8 +169,12 @@ const OrderScreen = () => {
                 />
                 
                 {/* Floating Action Button */}
-                <TouchableOpacity onPress={()=>router.push("(tabs)/home/PlaceOrder")} style={styles.fab} accessibilityLabel={`Create new ${activeTab === 'Orders' ? 'Order' : 'Travel'}`}>
-                    <Text style={styles.fabText}>+</Text>
+                <TouchableOpacity 
+                    onPress={() => router.push("(tabs)/home/PlaceOrder")} 
+                    style={styles.fab} 
+                    accessibilityLabel={`Create new ${activeTab === 'Orders' ? 'Order' : 'Travel'}`}
+                >
+                    <Ionicons name="add" size={28} color="#fff" />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -122,165 +187,179 @@ export default OrderScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#008080', // Teal background for status bar/top header
+        backgroundColor: '#008080',
     },
     header: {
         paddingHorizontal: 20,
-        // FIX: Platform must be imported from 'react-native' to use Platform.OS
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 30 : 10,
-        paddingBottom: 50,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 15 : 15,
+        paddingBottom: 60,
         backgroundColor: '#008080',
         alignItems: 'center',
         justifyContent: 'center',
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: '#ffff', // Slightly more opaque semi-transparent white
+        backgroundColor: '#FFFFFF',
         borderRadius: 30,
-        padding: 4, // Slightly increased padding
+        padding: 5,
         width: '100%',
-        maxWidth: 400, // Increased max width
+        maxWidth: 400,
     },
     tab: {
         flex: 1,
         paddingVertical: 10,
-        paddingHorizontal: 15, // Increased vertical padding
-        borderRadius: 30,
+        paddingHorizontal: 15,
+        borderRadius: 25,
         alignItems: 'center',
     },
     activeTab: {
         backgroundColor: '#008080',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 }, // Slightly stronger shadow
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-        elevation: 6, // Increased elevation
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
     },
     tabText: {
-        fontSize: 12,
-        fontWeight: '700', // Made inactive text bold
-        color: '#0000', 
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#666',
     },
     activeTabText: {
-        color: '#fff', 
+        color: '#fff',
+        fontWeight: '700',
     },
     contentArea: {
         flex: 1,
-        backgroundColor: '#fff', 
+        backgroundColor: '#F5F5F5',
         paddingHorizontal: 20,
-        paddingTop: 20, // Increased top padding for content separation
-        borderTopLeftRadius: 30, // Added rounded corners to the main content area
+        paddingTop: 20,
+        borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        marginTop: 0, // Pull content up slightly over the header
-    },
-    listTitle: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: '#333',
-        marginBottom: 10,
+        marginTop: -10,
     },
     searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFF',
-        borderRadius: 15, // Increased corner radius
+        borderRadius: 12,
         paddingHorizontal: 15,
         marginBottom: 20,
-        height: 55, // Slightly taller search bar
+        height: 48,
         borderWidth: 1,
-        borderColor: '#E0E0E0',
-        shadowColor: '#000', // Added subtle shadow to search bar
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 1,
-        elevation: 1,
+        borderColor: '#E5E5E5',
     },
     searchIcon: {
-        marginRight: 10,
+        marginRight: 8,
     },
     searchInput: {
         flex: 1,
-        fontSize: 13,
+        fontSize: 14,
         color: '#333',
     },
     filterButton: {
-        paddingLeft: 10,
+        paddingLeft: 8,
     },
     listContent: {
-        paddingBottom: 100, // More padding to ensure FAB doesn't cover last item
+        paddingBottom: 100,
+    },
+    new:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     card: {
         flexDirection: 'row',
         backgroundColor: '#FFF',
-        borderRadius: 15, // Increased corner radius
-        padding: 15,
-        marginBottom: 15, // Increased spacing between cards
-        borderLeftWidth: 0, // Decorative left border
-        elevation: 3,
-        borderColor: '#808080',
-        borderWidth: 0.5,
+        borderRadius: 12,
+        padding: 12,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: '#E5E5E5',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        elevation: 1,
     },
     cardImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 10,
-        marginRight: 15,
-        backgroundColor: '#F0F0F0', // Placeholder background for image
+        width: 70,
+        height: 70,
+        borderRadius: 8,
+        marginRight: 12,
+        backgroundColor: '#F0F0F0',
         resizeMode: 'cover',
     },
     cardDetails: {
         flex: 1,
-        justifyContent: 'space-around', // Distributes space vertically
+    },
+    titleRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: 4,
     },
     cardTitle: {
-        fontSize: 15, // Slightly larger title
-        fontWeight: '400',
-        color: '#0000',
-    },
-    cardSubtitle: {
         fontSize: 12,
-        color: '#888', // Softer subtitle color
+        fontWeight: '600',
+        color: '#1F2937',
+        flex: 1,
+    },
+    cardPrice: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#1F2937',
+        marginLeft: 8,
+    },
+    cardDate: {
+        fontSize: 11,
+        color: '#9CA3AF',
+        marginBottom: 6,
+    },
+    bottomRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     travelRoute: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 5,
+        justifyContent: 'space-between',
     },
     routeText: {
-        fontSize: 14,
-        color: '#008080', // Teal color for route for emphasis
+        fontSize: 12,
+        color: '#1F2937',
         fontWeight: '600',
     },
-    cardPriceContainer: {
-        alignItems: 'flex-end',
-        justifyContent: 'space-between',
-        marginLeft: 10,
+    flag: {
+        fontSize: 11,
+        marginHorizontal: 2,
+
     },
-    cardPrice: {
-        fontSize: 14,
-        fontWeight: '800',
-         // Using a punchier color (Tomato) for price
+    dashes: {
+        fontSize: 10,
+        color: '#008080',
+        letterSpacing: 0,
+        marginHorizontal: 8,
+        fontWeight: '600',
+    },
+    quantity: {
+        fontSize: 11,
+        color: '#6B7280',
     },
     fab: {
         position: 'absolute',
-        width: 55,
-        height: 55,
+        width: 56,
+        height: 56,
         alignItems: 'center',
         justifyContent: 'center',
-        right: 25,
-        top: '80%',
-        backgroundColor: '#008080', // Using the punchier price color for the FAB too
-        borderRadius: 12,
-        elevation: 100,
+        right: 20,
+        bottom: 30,
+        backgroundColor: '#008080',
+        borderRadius: 28,
+        elevation: 8,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
         shadowRadius: 8,
-    },
-    fabText: {
-        fontSize: 30,
-        color: '#FFF',
-        lineHeight: 34, // Centering the '+' icon
     },
     emptyList: {
         flex: 1,

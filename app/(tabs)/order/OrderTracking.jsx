@@ -3,13 +3,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const TEAL = "#008080";
@@ -20,26 +20,69 @@ const trackingData = {
   from: "DXB Dubai",
   to: "LHR Lahore",
   steps: [
-    { status: "Purchasing", date: "July 20, 2025 | 03:45 pm", completed: true, icon: "cart" },
-    { status: "Purchased", date: "July 22, 2025 | 03:45 pm", completed: true, icon: "bag-check" },
-    { status: "In-transit", date: "July 25, 2025 | 03:45 pm", completed: true, icon: "airplane" },
-    { status: "Arrived", date: "July 25, 2025 | 03:45 pm", completed: true, icon: "location" },
-    { status: "Dispatched", date: "July 27, 2025 | 03:45 pm", completed: false, icon: "cube" },
-    { status: "Received", date: "July 20, 2025 | 03:45 pm", completed: false, icon: "checkmark-circle" },
-    { status: "Completed", date: "July 20, 2025 | 03:45 pm", completed: false, icon: "thumbs-up" },
+    {
+      status: "Purchasing",
+      date: "July 20, 2025 | 03:45 pm",
+      completed: true,
+      icon: "cart",
+    },
+    {
+      status: "Purchased",
+      date: "July 22, 2025 | 03:45 pm",
+      completed: true,
+      icon: "bag-check",
+    },
+    {
+      status: "In-transit",
+      date: "July 25, 2025 | 03:45 pm",
+      completed: true,
+      icon: "airplane",
+    },
+    {
+      status: "Arrived",
+      date: "July 25, 2025 | 03:45 pm",
+      completed: true,
+      icon: "location",
+    },
+    {
+      status: "Dispatched",
+      date: "July 27, 2025 | 03:45 pm",
+      completed: false,
+      icon: "cube",
+    },
+    {
+      status: "Received",
+      date: "July 20, 2025 | 03:45 pm",
+      completed: false,
+      icon: "checkmark-circle",
+    },
+    {
+      status: "Completed",
+      date: "July 20, 2025 | 03:45 pm",
+      completed: false,
+      icon: "thumbs-up",
+    },
   ],
 };
 
 const getStepColor = (icon) => {
   switch (icon) {
-    case "cart": return "#FFA726";
-    case "bag-check": return "#29B6F6";
-    case "airplane": return "#42A5F5";
-    case "location": return "#AB47BC";
-    case "cube": return "#EF5350";
-    case "checkmark-circle": return "#66BB6A";
-    case "thumbs-up": return "#9E9E9E";
-    default: return "#999";
+    case "cart":
+      return "#FFA726";
+    case "bag-check":
+      return "#29B6F6";
+    case "airplane":
+      return "#42A5F5";
+    case "location":
+      return "#AB47BC";
+    case "cube":
+      return "#EF5350";
+    case "checkmark-circle":
+      return "#66BB6A";
+    case "thumbs-up":
+      return "#9E9E9E";
+    default:
+      return "#999";
   }
 };
 
@@ -61,8 +104,10 @@ export default function OrderTracking() {
 
       {/* Main White Card */}
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        >
           {/* Product Card - Report Button Removed */}
           <View style={styles.productCard}>
             <Image
@@ -73,7 +118,12 @@ export default function OrderTracking() {
               <Text style={styles.productName}>{trackingData.productName}</Text>
               <View style={styles.routeRow}>
                 <Text style={styles.routeText}>{trackingData.from}</Text>
-                <Ionicons name="airplane" size={18} color={TEAL} style={{ marginHorizontal: 10 }} />
+                <Ionicons
+                  name="airplane"
+                  size={18}
+                  color={TEAL}
+                  style={{ marginHorizontal: 10 }}
+                />
                 <Text style={styles.routeText}>{trackingData.to}</Text>
               </View>
             </View>
@@ -98,19 +148,39 @@ export default function OrderTracking() {
               return (
                 <View key={index} style={styles.timelineItem}>
                   <View style={styles.timelineLeft}>
-                    <View style={[styles.timelineDot, { backgroundColor: isCompleted ? iconColor : "#ddd" }]}>
+                    <View
+                      style={[
+                        styles.timelineDot,
+                        { backgroundColor: isCompleted ? iconColor : "#ddd" },
+                      ]}
+                    >
                       <Ionicons name={step.icon} size={20} color="#fff" />
                     </View>
                     {!isLast && (
-                      <View style={[styles.timelineLine, { backgroundColor: isCompleted ? iconColor : "#eee" }]} />
+                      <View
+                        style={[
+                          styles.timelineLine,
+                          { backgroundColor: isCompleted ? iconColor : "#eee" },
+                        ]}
+                      />
                     )}
                   </View>
 
                   <View style={styles.timelineRight}>
-                    <Text style={[styles.stepTitle, { color: isCompleted ? "#222" : "#aaa" }]}>
+                    <Text
+                      style={[
+                        styles.stepTitle,
+                        { color: isCompleted ? "#222" : "#aaa" },
+                      ]}
+                    >
                       {step.status}
                     </Text>
-                    <Text style={[styles.stepDate, { color: isCompleted ? "#777" : "#ccc" }]}>
+                    <Text
+                      style={[
+                        styles.stepDate,
+                        { color: isCompleted ? "#777" : "#ccc" },
+                      ]}
+                    >
                       {step.date}
                     </Text>
                   </View>
@@ -122,7 +192,12 @@ export default function OrderTracking() {
       </View>
 
       {/* Dropdown Menu Modal */}
-      <Modal transparent visible={menuVisible} animationType="fade" onRequestClose={() => setMenuVisible(false)}>
+      <Modal
+        transparent
+        visible={menuVisible}
+        animationType="fade"
+        onRequestClose={() => setMenuVisible(false)}
+      >
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
@@ -138,7 +213,9 @@ export default function OrderTracking() {
 
             <TouchableOpacity style={styles.menuItem}>
               <Ionicons name="close-circle-outline" size={20} color="#e74c3c" />
-              <Text style={[styles.menuText, { color: "#e74c3c" }]}>Cancel Order</Text>
+              <Text style={[styles.menuText, { color: "#e74c3c" }]}>
+                Cancel Order
+              </Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -151,7 +228,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: TEAL,
     height: 170,
-    paddingTop: 50,
+    paddingTop: 10,
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
@@ -188,16 +265,38 @@ const styles = StyleSheet.create({
   routeText: { fontSize: 13, color: "#555", fontWeight: "500" },
 
   barcodeContainer: { alignItems: "center", marginVertical: 24 },
-  barcode: { width: "100%", height: 70, backgroundColor: "#000", borderRadius: 8, marginBottom: 12 },
+  barcode: {
+    width: "100%",
+    height: 70,
+    backgroundColor: "#000",
+    borderRadius: 8,
+    marginBottom: 12,
+  },
   orderId: { fontSize: 13, color: "#888" },
-  orderNumber: { fontSize: 16, fontWeight: "bold", color: "#222", marginTop: 4 },
+  orderNumber: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#222",
+    marginTop: 4,
+  },
 
-  statusTitle: { fontSize: 17, fontWeight: "bold", color: "#222", marginBottom: 20 },
+  statusTitle: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#222",
+    marginBottom: 20,
+  },
 
   timeline: { marginLeft: 10 },
   timelineItem: { flexDirection: "row", marginBottom: 20 },
   timelineLeft: { alignItems: "center", width: 50 },
-  timelineDot: { width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center" },
+  timelineDot: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   timelineLine: { flex: 1, width: 3, marginTop: 8 },
   timelineRight: { flex: 1, marginLeft: 16, justifyContent: "center" },
   stepTitle: { fontSize: 15, fontWeight: "600" },

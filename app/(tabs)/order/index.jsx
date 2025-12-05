@@ -1,6 +1,6 @@
 // app/(tabs)/Order.jsx
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router"; // <-- ADDED: Needed for navigation
+import { router } from "expo-router";
 import { useState } from "react";
 import {
     Image,
@@ -17,36 +17,39 @@ const orders = [
     {
         id: 1,
         productName: "iPhone 15 Pro Max",
-        price: "$139.99",
-        from: "DXB Dubai",
-        to: "LHR Lahore",
+        price: "$139.59",
+        from: "DXB",
+        fromCity: "Dubai",
+        fromFlag: "🇦🇪",
+        to: "LHR",
+        toCity: "Lahore",
+        toFlag: "🇵🇰",
         seller: "Ahmed Sajjad",
-        status: "Purchasing", // Purchasing, Purchased, In-transit, Completed
+        status: "Purchasing",
     },
     {
         id: 2,
         productName: "iPhone 15 Pro Max",
-        price: "$139.99",
-        from: "DXB Dubai",
-        to: "LHR Lahore",
-        seller: "Ahmed Sajjad",
-        status: "Purchased",
-    },
-    {
-        id: 3,
-        productName: "iPhone 15 Pro Max",
-        price: "$139.99",
-        from: "DXB Dubai",
-        to: "LHR Lahore",
+        price: "$139.59",
+        from: "DXB",
+        fromCity: "Dubai",
+        fromFlag: "🇦🇪",
+        to: "LHR",
+        toCity: "Lahore",
+        toFlag: "🇵🇰",
         seller: "Ahmed Sajjad",
         status: "In-transit",
     },
     {
-        id: 4,
+        id: 3,
         productName: "iPhone 15 Pro Max",
-        price: "$139.99",
-        from: "DXB Dubai",
-        to: "LHR Lahore",
+        price: "$139.59",
+        from: "DXB",
+        fromCity: "Dubai",
+        fromFlag: "🇦🇪",
+        to: "LHR",
+        toCity: "Lahore",
+        toFlag: "🇵🇰",
         seller: "Ahmed Sajjad",
         status: "Completed",
     },
@@ -63,21 +66,19 @@ export default function Order() {
     const getStatusStyle = (status) => {
         switch (status) {
             case "Purchasing":
-                return { bg: "#FFF3E0", text: "#FF8F00" }; // Orange
+                return { bg: "#FFF3CD", text: "#F59E0B" };
             case "Purchased":
-                return { bg: "#E0F7FA", text: "#00ACC1" }; // Cyan
+                return { bg: "#DBEAFE", text: "#3B82F6" };
             case "In-transit":
-                return { bg: "#E8F5E9", text: "#43A047" }; // Green
+                return { bg: "#DBEAFE", text: "#0EA5E9" };
             case "Completed":
-                return { bg: "#EDE7F6", text: "#7B1FA2" }; // Purple
+                return { bg: "#D1FAE5", text: "#10B981" };
             default:
                 return { bg: "#F5F5F5", text: "#666" };
         }
     };
 
-    // Define the navigation function
     const goToOrderTracking = () => {
-        // Navigates to the /app/(tabs)/order/OrderTracking.jsx screen
         router.push("/(tabs)/order/OrderTracking");
     };
 
@@ -96,13 +97,18 @@ export default function Order() {
             >
                 {/* Search Bar */}
                 <View style={styles.searchBar}>
-                    <Ionicons name="search" size={20} color="#999" style={{ marginRight: 10 }} />
+                    <Ionicons name="search" size={18} color="#999" />
                     <Text style={styles.searchPlaceholder}>Search</Text>
-                    <Ionicons name="options-outline" size={24} color="#999" />
+                    <Ionicons name="options-outline" size={20} color="#999" />
                 </View>
 
                 {/* Tabs */}
-                <View style={styles.tabContainer}>
+                <ScrollView 
+                    horizontal 
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.tabScrollView}
+                    contentContainerStyle={styles.tabContainer}
+                >
                     {tabs.map((tab) => (
                         <TouchableOpacity
                             key={tab}
@@ -119,7 +125,7 @@ export default function Order() {
                             </Text>
                         </TouchableOpacity>
                     ))}
-                </View>
+                </ScrollView>
 
                 {/* Order List */}
                 {filteredOrders.map((order) => {
@@ -128,36 +134,55 @@ export default function Order() {
                         <TouchableOpacity
                             key={order.id}
                             style={styles.orderCard}
-                            onPress={goToOrderTracking} // <-- CHANGE APPLIED HERE
+                            onPress={goToOrderTracking}
                         >
                             <Image
-                                source={{ uri: "https://randomuser.me/api/portraits/men/32.jpg" }}
+                                source={{ uri: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" }}
                                 style={styles.productImage}
                             />
 
                             <View style={styles.orderInfo}>
-                                <Text style={styles.productName}>{order.productName}</Text>
-                                <Text style={styles.price}>{order.price}</Text>
+                                <View style={styles.topRow}>
+                                    <Text style={styles.productName}>{order.productName}</Text>
+                                    <Text style={styles.price}>{order.price}</Text>
+                                </View>
 
                                 <View style={styles.routeRow}>
-                                    <Text style={styles.routeText}>{order.from}</Text>
-                                    <Ionicons name="airplane" size={16} color={TEAL} style={{ marginHorizontal: 8 }} />
-                                    <Text style={styles.routeText}>{order.to}</Text>
+                                    <View style={styles.locationBox}>
+                                        <Text style={styles.airportCode}>{order.from}</Text>
+                                        <View style={styles.cityRow}>
+                                            <Text style={styles.cityText}>{order.fromCity}</Text>
+                                            <Text style={styles.flag}>{order.fromFlag}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.dashedLine}>
+                                        <Text style={styles.dashes}>- - - - -</Text>
+                                        <Ionicons name="airplane" size={16} color={TEAL} style={styles.airplane} />
+                                        <Text style={styles.dashes}>- - - - -&gt; </Text>
+                                    </View>
+
+                                    <View style={styles.locationBox}>
+                                        <Text style={styles.airportCode}>{order.to}</Text>
+                                        <View style={styles.cityRow}>
+                                            <Text style={styles.cityText}>{order.toCity}</Text>
+                                            <Text style={styles.flag}>{order.toFlag}</Text>
+                                        </View>
+                                    </View>
                                 </View>
 
-                                <View style={styles.sellerRow}>
-                                    <Image
-                                        source={{ uri: "https://randomuser.me/api/portraits/men/45.jpg" }}
-                                        style={styles.sellerAvatar}
-                                    />
-                                    <Text style={styles.sellerName}>{order.seller}</Text>
-                                </View>
-                            </View>
+                                <View style={styles.bottomRow}>
+                                    <View style={styles.sellerRow}>
+                                        <Ionicons name="person-circle-outline" size={16} color="#999" />
+                                        <Text style={styles.sellerName}>{order.seller}</Text>
+                                    </View>
 
-                            <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
-                                <Text style={[styles.statusText, { color: statusStyle.text }]}>
-                                    {order.status === "In-transit" ? "In-transit" : order.status}
-                                </Text>
+                                    <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+                                        <Text style={[styles.statusText, { color: statusStyle.text }]}>
+                                            {order.status}
+                                        </Text>
+                                    </View>
+                                </View>
                             </View>
                         </TouchableOpacity>
                     );
@@ -166,7 +191,7 @@ export default function Order() {
 
             {/* Floating Action Button */}
             <TouchableOpacity style={styles.fab}>
-                <Ionicons name="add" size={32} color="#fff" />
+                <Ionicons name="add" size={28} color="#fff" />
             </TouchableOpacity>
         </>
     );
@@ -175,7 +200,7 @@ export default function Order() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#FAFAFA",
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         marginTop: -20,
@@ -185,61 +210,61 @@ const styles = StyleSheet.create({
         height: 170,
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: 50,
+        paddingTop: 10,
     },
     headerTitle: {
         color: "#fff",
         fontSize: 20,
-        fontWeight: "bold",
+        fontWeight: "600",
     },
 
     searchBar: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#fff",
         marginHorizontal: 20,
         marginTop: 20,
         paddingHorizontal: 16,
-        paddingVertical: 14,
-        borderRadius: 30,
-        justifyContent: "space-between",
+        paddingVertical: 10,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
+        gap: 10,
     },
     searchPlaceholder: {
         flex: 1,
-        color: "#aaa",
-        fontSize: 15,
-        marginLeft: 8,
+        color: "#999",
+        fontSize: 14,
     },
 
+    tabScrollView: {
+        marginTop: 16,
+        marginHorizontal: 20,
+    },
     tabContainer: {
         flexDirection: "row",
-        marginHorizontal: 20,
-        marginTop: 20,
-        backgroundColor: "#f0f0f0",
-        borderRadius: 30,
-        padding: 6,
+        gap: 4,
+        paddingBottom: 4,
     },
     tab: {
-        flex: 1,
-        paddingVertical: 10,
-        alignItems: "center",
-        borderRadius: 25,
+        paddingHorizontal: 20,
+        paddingVertical: 4,
+        borderRadius: 20,
+        borderWidth: 1.5,
+        borderColor: "#E5E5E5",
+        backgroundColor: "#fff",
     },
     activeTab: {
-        backgroundColor: "#fff",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 5,
-        elevation: 5,
+        backgroundColor: TEAL,
+        borderColor: TEAL,
     },
     tabText: {
-        fontSize: 13,
-        color: "#888",
+        fontSize: 12,
+        color: "#666",
         fontWeight: "500",
     },
     activeTabText: {
-        color: TEAL,
+        color: "#fff",
         fontWeight: "600",
     },
 
@@ -248,66 +273,101 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginHorizontal: 20,
         marginTop: 16,
-        padding: 14,
-        borderRadius: 16,
+        padding: 12,
+        borderRadius: 12,
         borderWidth: 1,
-        borderColor: "#f0f0f0",
+        borderColor: "#E5E5E5",
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 4,
-        alignItems: "center",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
     },
     productImage: {
         width: 80,
-        height: 80,
-        borderRadius: 12,
-        marginRight: 14,
+        height: 90,
+        borderRadius: 8,
+        marginRight: 12,
+        backgroundColor: "#f0f0f0",
     },
     orderInfo: {
         flex: 1,
     },
+    topRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        marginBottom: 8,
+    },
     productName: {
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: "600",
-        color: "#222",
+        color: "#1F2937",
+        flex: 1,
     },
     price: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: TEAL,
-        marginVertical: 4,
+        fontSize: 12,
+        fontWeight: "700",
+        color: "#1F2937",
+        marginLeft: 8,
     },
     routeRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 4,
+        marginBottom: 8,
+        gap: 4,
     },
-    routeText: {
-        fontSize: 12,
-        color: "#666",
+    locationBox: {
+        alignItems: "flex-start",
+    },
+    airportCode: {
+        fontSize: 10,
+        fontWeight: "700",
+        color: "#1F2937",
+    },
+    cityRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 4,
+    },
+    cityText: {
+        fontSize: 9,
+        color: "#6B7280",
+    },
+    flag: {
+        fontSize: 10,
+    },
+    dashedLine: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 4,
+    },
+    dashes: {
+        fontSize: 10,
+        color: "#008080",
+        letterSpacing: 1,
+    },
+    airplane: {
+        marginHorizontal: 2,
+    },
+    bottomRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     sellerRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 8,
-    },
-    sellerAvatar: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        marginRight: 6,
+        gap: 4,
     },
     sellerName: {
         fontSize: 12,
-        color: "#777",
+        color: "#6B7280",
     },
     statusBadge: {
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 20,
-        alignSelf: "flex-start",
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 12,
     },
     statusText: {
         fontSize: 11,
@@ -328,6 +388,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
-        elevation: 10,
+        elevation: 8,
     },
 });

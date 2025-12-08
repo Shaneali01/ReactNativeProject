@@ -1,278 +1,389 @@
-// Profile.jsx
-import { Ionicons } from '@expo/vector-icons';
+// app/(tabs)/profile/index.jsx
+// app/(tabs)/profile/index.jsx
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
-import { Avatar, Badge, Chip } from 'react-native-paper';
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Reviews from "../../components/profile/Reviews";
+import TravelHistory from "../../components/profile/TravelHistory";
 
-const Profile = () => {
+const TEAL = "#008080";
+
+export default function ProfileScreen() {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("Personal");
+
+  const preferences = [
+    "Beauty & Personal Care",
+    "Clothing",
+    "Electronics",
+    "Kids & Toys",
+    "Home & Kitchen",
+    "Fashion & Apparel",
+  ];
+
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Header Background */}
-      <View style={styles.headerBackground}>
-       
+    <View style={{ flex: 1, backgroundColor: TEAL }}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Ionicons name="chevron-back" size={28} color="#fff" />
+        </TouchableOpacity>
 
-        {/* Profile Picture with Badge */}
-        <View style={styles.avatarContainer}>
-          <Avatar.Image
-            size={100}
-            source={{ uri: 'https://randomuser.me/api/portraits/men/86.jpg' }} // Replace with actual image
-            style={styles.avatar}
+        {/* Profile Picture */}
+        <View style={styles.profilePictureContainer}>
+          <Image
+            source={{ uri: "https://i.pravatar.cc/300?img=12" }}
+            style={styles.profilePicture}
           />
-          <Badge style={styles.onlineBadge} size={28}>
-            <Ionicons name="checkmark" size={16} color="#fff" />
-          </Badge>
-          <TouchableOpacity style={styles.cameraIcon}>
-            <Ionicons name="camera" size={20} color="#666" />
+          <TouchableOpacity style={styles.cameraButton}>
+            <Ionicons name="camera" size={18} color={TEAL} />
           </TouchableOpacity>
         </View>
 
-        {/* Name and Rating */}
+        {/* Name and Join Info */}
         <Text style={styles.name}>Ibrar Naveed</Text>
-        <Text style={styles.joinDate}>Joined Date: 26/07/2025</Text>
+        <Text style={styles.joinDate}>Joined Date: 29/7/2025</Text>
 
+        {/* Rating */}
         <View style={styles.ratingContainer}>
-          <Ionicons name="star" size={20} color="#FFD700" />
-          <Text style={styles.ratingText}>4.8</Text>
-          <Text style={styles.reviewCount}>(25)</Text>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Ionicons key={star} name="star" size={16} color="#FFD700" />
+          ))}
+          <Text style={styles.ratingText}>25</Text>
         </View>
       </View>
 
-      {/* Tabs */}
-      <View style={styles.tabContainer}>
-        <Text style={styles.activeTab}>Personal</Text>
-        <Text style={styles.inactiveTab}>Travel History</Text>
-        <Text style={styles.inactiveTab}>Reviews</Text>
-      </View>
-
-      <View style={styles.content}>
-        {/* Personal Information */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Personal Information</Text>
-            <TouchableOpacity>
-              <Text style={styles.editText}>Edit</Text>
+      {/* White Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Tabs */}
+        <View style={styles.tabsContainer}>
+          {["Personal", "Travel History", "Reviews"].map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[
+                styles.tab,
+                activeTab === tab && styles.activeTab,
+              ]}
+              onPress={() => setActiveTab(tab)}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === tab && styles.activeTabText,
+                ]}
+              >
+                {tab}
+              </Text>
             </TouchableOpacity>
-          </View>
-
-          <View style={styles.infoRow}>
-            <Ionicons name="person-outline" size={20} color="#666" />
-            <Text style={styles.infoText}>Ibrar</Text>
-          </View>
-
-          <View style={styles.infoRow}>
-            <Ionicons name="mail-outline" size={20} color="#666" />
-            <Text style={styles.infoText}>Ibrar.naveed@gmail.com</Text>
-          </View>
-
-          <View style={styles.infoRow}>
-            <Ionicons name="call-outline" size={20} color="#666" />
-            <Text style={styles.infoText}>0300 0000000</Text>
-          </View>
-
-          <View style={styles.infoRow}>
-            <Ionicons name="location-outline" size={20} color="#666" />
-            <Text style={styles.infoText}>123 Main St, Cityville</Text>
-          </View>
-
-          <View style={styles.aboutSection}>
-            <Text style={styles.aboutTitle}>About</Text>
-            <Text style={styles.aboutText}>
-              Lorem ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-            </Text>
-          </View>
-
-          <Text style={styles.preferencesTitle}>Preferences</Text>
-          <View style={styles.chipsContainer}>
-            {['Beauty & Personal Care', 'Clothing', 'Electronics', 'Kids & Toys', 'Home & Kitchen', 'Fashion & Apparel'].map((item) => (
-              <Chip key={item} mode="outlined" style={styles.chip} textStyle={styles.chipText}>
-                {item}
-              </Chip>
-            ))}
-          </View>
+          ))}
         </View>
+
+        {/* Content */}
+        <ScrollView 
+          style={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {activeTab === "Personal" && (
+            <>
+              {/* Personal Information Header */}
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Personal Information</Text>
+                <TouchableOpacity style={styles.editButton}>
+                  <Ionicons name="pencil" size={16} color={TEAL} />
+                  <Text style={styles.editText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Email */}
+              <View style={styles.infoCard}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="mail-outline" size={20} color="#666" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Email</Text>
+                  <Text style={styles.infoValue}>ibrar.naveed@gmail.com</Text>
+                </View>
+              </View>
+
+              {/* Phone */}
+              <View style={styles.infoCard}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="call-outline" size={20} color="#666" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Phone</Text>
+                  <Text style={styles.infoValue}>0300 0000000</Text>
+                </View>
+              </View>
+
+              {/* Location */}
+              <View style={styles.infoCard}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="location-outline" size={20} color="#666" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Location</Text>
+                  <Text style={styles.infoValue}>123 Main St, Cityville</Text>
+                </View>
+              </View>
+
+              {/* About */}
+              <View style={styles.infoCard}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="person-outline" size={20} color="#666" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>About</Text>
+                  <Text style={styles.aboutText}>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  </Text>
+                </View>
+              </View>
+
+              {/* Preferences */}
+              <View style={styles.infoCard}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="bookmark-outline" size={20} color="#666" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Preferences</Text>
+                  <View style={styles.preferencesContainer}>
+                    {preferences.map((pref, index) => (
+                      <View key={index} style={styles.preferenceTag}>
+                        <Text style={styles.preferenceText}>{pref}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </View>
+            </>
+          )}
+
+          {activeTab === "Travel History" && <TravelHistory />}
+          {activeTab === "Reviews" && <Reviews />}
+
+          <View style={{ height: 40 }} />
+        </ScrollView>
       </View>
-    </ScrollView>
+    </View>
   );
-};
+}
+
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  header: {
+    backgroundColor: TEAL,
+    paddingTop: 50,
+    paddingBottom: 30,
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
-  headerBackground: {
-    backgroundColor: '#008080',
-    paddingBottom: 60,
+  backButton: {
+    position: "absolute",
+    left: 20,
+    top: 50,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 10,
-  },
-  timeText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  statusIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatarContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  avatar: {
-    backgroundColor: '#fff',
-  },
-  onlineBadge: {
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
-    backgroundColor: '#4CAF50',
-    borderWidth: 3,
-    borderColor: '#fff',
-  },
-  cameraIcon: {
-    position: 'absolute',
-    bottom: 0,
-    left: '58%',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 8,
-    elevation: 5,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 16,
-  },
-  joinDate: {
-    fontSize: 14,
-    color: '#E0F7FA',
-    textAlign: 'center',
-    marginTop: 4,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+
+  profilePictureContainer: {
+    position: "relative",
     marginTop: 10,
   },
+  profilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 4,
+    borderColor: "#fff",
+    backgroundColor: "#f0f0f0",
+  },
+  cameraButton: {
+    position: "absolute",
+    bottom: 2,
+    right: 2,
+    backgroundColor: "#fff",
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: TEAL,
+  },
+
+  name: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#fff",
+    marginTop: 12,
+  },
+  joinDate: {
+    fontSize: 13,
+    color: "rgba(255, 255, 255, 0.9)",
+    marginTop: 4,
+  },
+
+  ratingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
   ratingText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 6,
+    color: "#fff",
+    fontSize: 14,
+    marginLeft: 8,
+    fontWeight: "600",
   },
-  reviewCount: {
-    color: '#E0F7FA',
-    marginLeft: 6,
+
+  contentContainer: {
+    flex: 1,
+    backgroundColor: "#ffff",
+    marginTop: -0,
+    paddingTop: 0,
   },
-  tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginTop: -20,
-    marginHorizontal: 16,
-    borderRadius: 12,
-    elevation: 5,
-   
+
+  tabsContainer: {
+    position:"absolute",
+    flexDirection: "row",
+    marginHorizontal: 20,
+    marginTop: 16,
+    backgroundColor: "#F5F5F5",
+    borderRadius: 25,
+    padding: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
+    zIndex: 10,
+    top: -38,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: "center",
+    borderRadius: 22,
   },
   activeTab: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#00A19D',
-    paddingBottom: 8,
-    borderBottomWidth: 3,
-    borderBottomColor: '#00A19D',
+    backgroundColor: '#ffff',
   },
-  inactiveTab: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#999',
+  tabText: {
+    fontSize: 13,
+    color: "#999",
+    fontWeight: "600",
   },
-  content: {
+  activeTabText: {
+    color: "#008080",
+    fontWeight: "600",
+  },
+
+  scrollContent: {
+    flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
+    backgroundColor: "#ffff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    marginTop: 30,
+    paddingTop: 16,
   },
-  section: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-    elevation: 3,
-  },
+
   sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
     marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "600",
+    color: "#000",
+  },
+  editButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
   },
   editText: {
-    color: '#00A19D',
-    fontWeight: '600',
+    color: TEAL,
+    fontSize: 14,
+    fontWeight: "600",
+    marginLeft: 4,
   },
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
+
+  infoCard: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#f0f0f0",
   },
-  infoText: {
-    marginLeft: 16,
-    fontSize: 15,
-    color: '#444',
+  iconCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
   },
-  aboutSection: {
-    marginTop: 10,
-    marginBottom: 20,
+  infoContent: {
+    flex: 1,
   },
-  aboutTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#333',
+  infoLabel: {
+    fontSize: 12,
+    color: "#999",
+    marginBottom: 4,
+    fontWeight: "500",
+  },
+  infoValue: {
+    fontSize: 12,
+    color: "#000",
+    fontWeight: "500",
   },
   aboutText: {
-    color: '#666',
-    lineHeight: 22,
+    fontSize: 12,
+    color: "#666",
+    lineHeight: '100%',
   },
-  preferencesTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 12,
-    color: '#333',
+
+  preferencesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 4,
   },
-  chipsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
+  preferenceTag: {
+    backgroundColor: "#E0F2F1",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
   },
-  chip: {
-    marginBottom: 8,
-    backgroundColor: '#F0FDFA',
-    borderColor: '#00A19D',
-  },
-  chipText: {
-    fontSize: 13,
-    color: '#00A19D',
+  preferenceText: {
+    fontSize: 12,
+    color: TEAL,
+    fontWeight: "500",
   },
 });
-
-export default Profile;

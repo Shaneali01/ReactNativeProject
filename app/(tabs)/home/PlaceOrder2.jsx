@@ -3,16 +3,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Header from "../../../components/common/Header";
 
 const TEAL = "#008080";
 
@@ -28,14 +29,7 @@ export default function PlaceOrder2() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Place Your Order</Text>
-        <View style={{ width: 28 }} />
-      </View>
-
+     <Header title="Place Order" />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* From */}
         <Text style={styles.label}>From</Text>

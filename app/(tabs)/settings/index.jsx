@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Header from "../../../components/common/Header";
 
 const TEAL = "#008080";
 
@@ -16,13 +17,7 @@ export default function Settings() {
   return (
     <>
       {/* Teal Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={26} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Settings</Text>
-        <View style={{ width: 30 }} />
-      </View>
+     <Header title="Settings" />
 
       {/* Rounded White Container - Same as Inbox, Travel, etc. */}
       <ScrollView

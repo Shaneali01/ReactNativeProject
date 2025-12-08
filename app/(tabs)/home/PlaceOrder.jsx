@@ -15,6 +15,7 @@ import {
   View,
 } from "react-native";
 import CategoryTagInput from "../../../components/OrderPlacing/CategoryTagInput";
+import Header from "../../../components/common/Header";
 
 const TEAL = "#008080";
 
@@ -43,13 +44,7 @@ export default function PlaceOrder() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Place Your Order</Text>
-        <View style={{ width: 28 }} />
-      </View>
+     <Header title="Place Order" />
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Website Link */}
@@ -133,17 +128,6 @@ export default function PlaceOrder() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: TEAL,
-    height: 170,
-    paddingTop: 10,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerTitle: { color: "#fff", fontSize: 16, fontWeight: "bold" },
 
   container: {
     flex: 1,

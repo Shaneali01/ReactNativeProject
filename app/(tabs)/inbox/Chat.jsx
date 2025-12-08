@@ -1,6 +1,5 @@
-// app/(tabs)/inbox/Chat/index.jsx
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Image,
@@ -14,6 +13,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import AirplaneRouteImage from "../../../assets/images/airplanedashes.png";
+import Header from "../../../components/common/Header";
 
 const TEAL = "#008080";
 
@@ -22,11 +23,12 @@ export default function ChatScreen() {
   const [message, setMessage] = useState("");
   const scrollViewRef = useRef(null);
 
+  // Note: message 1 is yours (isMe: true), messages 2, 3, 4 are theirs (isMe: false)
   const messages = [
     { id: 1, text: "Let's get lunch. How about pizza?", isMe: true, time: "4:03 PM" },
-    { id: 2, text: "Let's do it! I'm in a meeting until noon.", isMe: false, time: "4:05 PM" },
+    { id: 2, text: "Let's do it! I'm in a meeting until noon.", isMe: false, time: "4:28 PM" },
     { id: 3, text: "That's perfect. There's a new place on Main St I've been wanting to check out. I hear their hawaiian pizza is awesome!", isMe: false, time: "4:06 PM" },
-    { id: 4, text: "I don't know why people are so anti pineapple pizza. I kind of like it.", isMe: true, time: "4:08 PM" },
+    { id: 4, text: "I don't know why people are so anti pineapple pizza. I kind of like it.", isMe: false, time: "4:08 PM" },
   ];
 
   useEffect(() => {
@@ -39,15 +41,9 @@ export default function ChatScreen() {
   return (
     <>
       {/* Teal Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={26} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{name}</Text>
-        <View style={{ width: 30 }} />
-      </View>
-
-      {/* Rounded White Container - Same as Inbox/Travel */}
+      <Header title="Ibrar Naveed" />
+      
+      {/* Rounded White Container */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -62,18 +58,27 @@ export default function ChatScreen() {
                 style={styles.productImage}
               />
               <View style={{ flex: 1, marginLeft: 12 }}>
-                <Text style={styles.productTitle}>iPhone 15 Pro Max</Text>
+                <View style={styles.new}>
+                    <Text style={styles.productTitle}>iPhone 15 Pro Max</Text>
+                  <Text style={styles.price}>$139.59</Text>
+
+                </View>
+              
                 <View style={styles.routeRow}>
                   <Text style={styles.airport}>DXB</Text>
-                  <Text style={styles.citySmall}>Dubai</Text>
-                  <View style={styles.dottedLine} />
-                  <Ionicons name="airplane" size={16} color={TEAL} />
-                  <View style={styles.dottedLine} />
+                <Image
+                      source={AirplaneRouteImage}
+                      style={styles.airplaneIcon} // Using new style for size
+                      resizeMode="contain"
+                    />
                   <Text style={styles.airport}>LHR</Text>
-                  <Text style={styles.citySmall}>Lahore</Text>
+                </View>
+                <View style={styles.new}>
+                      <Text style={styles.citySmall}>Dubai 🇦🇪</Text>
+                      <Text style={styles.citySmall}>Lahore 🇵🇰</Text>
+
                 </View>
               </View>
-              <Text style={styles.price}>$139.59</Text>
             </View>
           </View>
 
@@ -91,8 +96,17 @@ export default function ChatScreen() {
                   msg.isMe ? styles.myMessageWrapper : styles.theirMessageWrapper,
                 ]}
               >
+                {/* Avatar for received messages */}
+                {!msg.isMe && (
+                  <Image
+                    source={{ uri: "https://i.pravatar.cc/150?img=12" }}
+                    style={styles.avatar}
+                  />
+                )}
+                
                 <View style={[styles.bubble, msg.isMe ? styles.myBubble : styles.theirBubble]}>
-                  <Text style={[styles.messageText, msg.isMe && { color: "#fff" }]}>
+                  {/* TEXT COLOR UPDATE: Their text is white, My text is default dark (#1E1E1E) */}
+                  <Text style={[styles.messageText, !msg.isMe && { color: "#fff" }]}> 
                     {msg.text}
                   </Text>
                   <Text style={[styles.time, msg.isMe && { color: "#b2dfdb" }]}>
@@ -105,22 +119,24 @@ export default function ChatScreen() {
 
           {/* Input Bar */}
           <View style={styles.inputBar}>
-            <TextInput
-              style={styles.input}
-              placeholder="Message"
-              placeholderTextColor="#999"
-              value={message}
-              onChangeText={setMessage}
-              multiline
-            />
-            <TouchableOpacity style={{ paddingHorizontal: 8 }}>
-              <Ionicons name="mic" size={26} color="#666" />
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="Message"
+                placeholderTextColor="#999"
+                value={message}
+                onChangeText={setMessage}
+                multiline
+              />
+            </View>
+            <TouchableOpacity style={styles.iconButton}>
+              <Ionicons name="mic-outline" size={24} color="#666" />
             </TouchableOpacity>
-            <TouchableOpacity style={{ paddingHorizontal: 8 }}>
-              <Ionicons name="image-outline" size={26} color="#666" />
+            <TouchableOpacity style={styles.iconButton}>
+              <Ionicons name="attach-outline" size={24} color="#666" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.sendButton}>
-              <Ionicons name="send" size={22} color="#fff" />
+              <Ionicons name="send" size={20} color="#fff" />
             </TouchableOpacity>
           </View>
         </View>
@@ -138,17 +154,11 @@ const styles = StyleSheet.create({
     marginTop: -20,
     overflow: "hidden",
   },
-
-  header: {
-    backgroundColor: TEAL,
-    height: 170,
-    paddingTop: 10,
-    paddingHorizontal: 20,
+  new:{
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
   },
-  headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   productCardWrapper: {
     paddingHorizontal: 20,
@@ -162,59 +172,127 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.12,
     shadowRadius: 10,
     elevation: 8,
   },
-  productImage: { width: 56, height: 56, borderRadius: 10 },
-  productTitle: { fontSize: 13.5, fontWeight: "bold", color: "#222" },
-  routeRow: { flexDirection: "row", alignItems: "center", marginTop: 6 },
-  airport: { fontSize: 14, fontWeight: "bold", color: "#333" },
-  citySmall: { fontSize: 10, color: "#777", marginLeft: 4 },
+  productImage: { 
+    width: 78, 
+    height: 80, 
+    borderRadius: 8 
+  },
+  productTitle: { 
+    fontSize: 14, 
+    fontWeight: "bold", 
+    color: "#1A1C1E" 
+  },
+  routeRow: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginTop: 6 
+  },
+  airport: { 
+    fontSize: 13, 
+    fontWeight: "bold", 
+    color: "#333" 
+  },
+  citySmall: { 
+    fontSize: 10, 
+    color: "#000000", 
+    marginLeft: 4 
+  },
   dottedLine: {
     flex: 1,
     height: 1,
-    borderTopWidth: 1.5,
+    borderTopWidth: 1,
     borderColor: "#ccc",
-    borderStyle: "dotted",
-    marginHorizontal: 8,
+    borderStyle: "dashed",
+    marginHorizontal: 6,
   },
-  price: { fontSize: 16, fontWeight: "bold", color: TEAL, marginLeft: 12 },
+  price: { 
+    fontSize: 14, 
+    fontWeight: "bold", 
+    color: '#1A1C1E', 
+    marginLeft: 12 
+  },
 
-  messageWrapper: { marginVertical: 6, paddingHorizontal: 16 },
-  myMessageWrapper: { alignItems: "flex-end" },
-  theirMessageWrapper: { alignItems: "flex-start" },
+  messageWrapper: { 
+    marginTop: 12,
+    marginVertical: 4, 
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "flex-end",
+  },
+  myMessageWrapper: { 
+    justifyContent: "flex-end" 
+  },
+  theirMessageWrapper: { 
+    justifyContent: "flex-start" 
+  },
+
+  avatar: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    marginRight: 8,
+    backgroundColor: "#e0e0e0",
+  },
 
   bubble: {
-    maxWidth: "80%",
+    maxWidth: "75%",
     paddingHorizontal: 16,
-    paddingVertical: 11,
-    borderRadius: 22,
+    paddingVertical: 10,
+    borderRadius: 20,
   },
-  myBubble: { backgroundColor: TEAL, borderBottomRightRadius: 6 },
-  theirBubble: { backgroundColor: "#fff", borderBottomLeftRadius: 6 },
+  myBubble: { 
+    backgroundColor: '#D8EBEB', 
+    borderBottomRightRadius: 4 
+  },
+  theirBubble: { 
+    backgroundColor: "#008080", 
+    borderBottomLeftRadius: 4 
+  },
 
-  messageText: { fontSize: 15, lineHeight: 21 },
-  time: { fontSize: 11, marginTop: 4, alignSelf: "flex-end" },
+  messageText: { 
+    fontSize: 15, 
+    lineHeight: 21,
+    color: "#1E1E1E", // Default text color is dark/black (for 'my' messages)
+  },
+  time: { 
+    fontSize: 10, 
+    marginTop: 4, 
+    alignSelf: "flex-end",
+    color: "#ffff",
+  },
 
   inputBar: {
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
     backgroundColor: "#fff",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderTopWidth: 1,
     borderTopColor: "#eee",
   },
-  input: {
+  inputWrapper: {
     flex: 1,
     backgroundColor: "#f5f5f5",
     borderRadius: 25,
+    marginRight: 8,
+  },
+  input: {
     paddingHorizontal: 18,
-    paddingVertical: 12,
-    fontSize: 16,
+    paddingVertical: 10,
+    fontSize: 15,
     maxHeight: 100,
-    marginRight: 10,
+    color: "#222",
+  },
+  iconButton: {
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
   sendButton: {
     backgroundColor: TEAL,
@@ -223,5 +301,11 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 4,
   },
+  airplaneIcon: {
+    width: 120,
+    height: 40,
+    marginHorizontal: 30,
+  }, 
 });

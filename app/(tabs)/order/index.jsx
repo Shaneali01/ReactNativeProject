@@ -1,7 +1,6 @@
 // app/(tabs)/Order.jsx
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useState } from "react";
 import {
     Image,
     ScrollView,
@@ -10,6 +9,9 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import Fab from "../../../components/common/Fab";
+import Header from "../../../components/common/Header";
+import SearchBar from "../../../components/common/SearchBar";
 
 const TEAL = "#008080";
 
@@ -56,12 +58,11 @@ const orders = [
 ];
 
 export default function Order() {
-    const [activeTab, setActiveTab] = useState("All");
+    // Removed activeTab state since tabs are gone
+    // const [activeTab, setActiveTab] = useState("All");
 
-    const tabs = ["All", "Purchasing", "Purchased", "In-transit"];
-
-    const filteredOrders =
-        activeTab === "All" ? orders : orders.filter((o) => o.status === activeTab);
+    // Always show all orders now
+    const filteredOrders = orders;
 
     const getStatusStyle = (status) => {
         switch (status) {
@@ -79,16 +80,12 @@ export default function Order() {
     };
 
     const goToOrderTracking = () => {
-        router.push("/(tabs)/order/OrderTracking");
+        router.push("/(tabs)/order/OrderDetails");
     };
 
     return (
         <>
-            {/* Teal Header */}
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>Orders</Text>
-            </View>
-
+            <Header title="Orders" />
             {/* White Rounded Container */}
             <ScrollView
                 style={styles.container}
@@ -96,36 +93,9 @@ export default function Order() {
                 contentContainerStyle={{ paddingBottom: 120 }}
             >
                 {/* Search Bar */}
-                <View style={styles.searchBar}>
-                    <Ionicons name="search" size={18} color="#999" />
-                    <Text style={styles.searchPlaceholder}>Search</Text>
-                    <Ionicons name="options-outline" size={20} color="#999" />
-                </View>
+                <SearchBar />
 
-                {/* Tabs */}
-                <ScrollView 
-                    horizontal 
-                    showsHorizontalScrollIndicator={false}
-                    style={styles.tabScrollView}
-                    contentContainerStyle={styles.tabContainer}
-                >
-                    {tabs.map((tab) => (
-                        <TouchableOpacity
-                            key={tab}
-                            style={[styles.tab, activeTab === tab && styles.activeTab]}
-                            onPress={() => setActiveTab(tab)}
-                        >
-                            <Text
-                                style={[
-                                    styles.tabText,
-                                    activeTab === tab && styles.activeTabText,
-                                ]}
-                            >
-                                {tab}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
+                {/* Tabs removed – no horizontal ScrollView or tab buttons */}
 
                 {/* Order List */}
                 {filteredOrders.map((order) => {
@@ -190,9 +160,7 @@ export default function Order() {
             </ScrollView>
 
             {/* Floating Action Button */}
-            <TouchableOpacity style={styles.fab}>
-                <Ionicons name="add" size={28} color="#fff" />
-            </TouchableOpacity>
+            <Fab link="/(tabs)/order/PlaceOrder" />
         </>
     );
 }
@@ -237,36 +205,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    tabScrollView: {
-        marginTop: 16,
-        marginHorizontal: 20,
-    },
-    tabContainer: {
-        flexDirection: "row",
-        gap: 4,
-        paddingBottom: 4,
-    },
-    tab: {
-        paddingHorizontal: 20,
-        paddingVertical: 4,
-        borderRadius: 20,
-        borderWidth: 1.5,
-        borderColor: "#E5E5E5",
-        backgroundColor: "#fff",
-    },
-    activeTab: {
-        backgroundColor: TEAL,
-        borderColor: TEAL,
-    },
-    tabText: {
-        fontSize: 12,
-        color: "#666",
-        fontWeight: "500",
-    },
-    activeTabText: {
-        color: "#fff",
-        fontWeight: "600",
-    },
+    // Tab-related styles removed (they are no longer used)
+    // tabScrollView, tabContainer, tab, activeTab, tabText, activeTabText removed
 
     orderCard: {
         flexDirection: "row",

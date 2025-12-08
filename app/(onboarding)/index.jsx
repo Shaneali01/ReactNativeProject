@@ -1,40 +1,9 @@
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Dimensions, FlatList, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// NOTE: You will need to install 'expo-secure-store' for robust storage or use 'expo-constants' for 'AsyncStorage'
-// For this example, we'll use a placeholder function for storage.
-
-// Get device dimensions for full-screen slides
 const { width } = Dimensions.get('window');
 
-// --- Screen Data (Based on your images) ---
-const slides = [
-  {
-    key: 'slide1',
-    title: 'Welcome to GrabnGo!',
-    description: 'Discover a new way to get what you need from abroad.',
-    // 💡 Replace with your actual image path (e.g., './assets/images/onboarding1.jpg')
-    image: require('../../assets/images/luggage.png'), 
-    buttonText: 'Next',
-  },
-  {
-    key: 'slide2',
-    title: 'Connect Travelers with Shoppers',
-    description: 'Add your travel plans and help others get what they need',
-    image: require('../../assets/images/luggage.png'), 
-    buttonText: 'Next',
-  },
-  {
-    key: 'slide3',
-    title: 'Make Money Traveling',
-    description: 'Earn extra cash by delivering items during your trip.',
-    image: require('../../assets/images/luggage.png'),
-    buttonText: 'Get Started!',
-  },
-];
-// --- END Screen Data ---
-
-
+import slides from "../../constants/OnboardingSlideData.js";
 // --- Single Slide Component ---
 const OnboardingItem = ({ item }) => (
   // Ensure the image path is correct relative to this file's location!
@@ -47,24 +16,14 @@ const OnboardingItem = ({ item }) => (
     </View>
   </ImageBackground>
 );
-// --- END Single Slide Component ---
-
-
 // --- Main Component ---
 const OnboardingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
   const slidesRef = useRef(null);
-
-  // Function to mark onboarding complete and navigate to the Auth flow
   const completeOnboarding = async () => {
-    // ⚠️ IMPORTANT: In a real app, you would set a flag here:
-    // await AsyncStorage.setItem('hasOnboarded', 'true');
-    
-    // Navigate out of the onboarding group to your sign-in/auth group
     router.replace('/(auth)/AuthScreen'); 
   };
-
   const scrollToNext = () => {
     if (currentIndex < slides.length - 1) {
       // Scroll to the next index
@@ -81,7 +40,6 @@ const OnboardingScreen = () => {
   const handleSkip = () => {
     completeOnboarding();
   };
-
   // Updates the currentIndex state when a new slide becomes visible
   const handleViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {

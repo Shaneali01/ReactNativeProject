@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 10,
-    marginTop: 20,
+    marginTop:0,
   },
   actionButtonText: { color: "#FFF", fontSize: 14, fontWeight: "700" },
   actionButtonDisabled: { opacity: 0.7 },

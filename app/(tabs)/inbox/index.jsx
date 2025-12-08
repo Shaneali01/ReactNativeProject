@@ -1,15 +1,15 @@
 // app/(tabs)/Inbox.jsx
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
+import Header from "../../../components/common/Header";
+import SearchBar from "../../../components/common/SearchBar";
 
 const TEAL = "#008080";
 
@@ -26,13 +26,7 @@ export default function Inbox() {
   return (
     <>
       {/* Teal Header - Outside the rounded container */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Inbox</Text>
-        <View style={{ width: 28 }} />
-      </View>
+      <Header title="Inbox" />
 
       {/* Rounded White Container - Exactly like your other screens */}
       <ScrollView
@@ -41,14 +35,7 @@ export default function Inbox() {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Search Bar */}
-        <View style={styles.searchBar}>
-          <Ionicons name="search" size={18} color="#999" />
-          <TextInput
-            placeholder="Search"
-            style={styles.searchInput}
-            placeholderTextColor="#aaa"
-          />
-        </View>
+        <SearchBar/>
 
         {/* Chat List */}
         {chats.map((chat) => (

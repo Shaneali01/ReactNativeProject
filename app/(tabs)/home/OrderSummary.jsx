@@ -1,5 +1,4 @@
 // app/(tabs)/home/OrderSummary.jsx
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -13,7 +12,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ProductDetailsModal from "../../components/home/ProductDetails";
+import Header from "../../../components/common/Header";
+import ProductDetailsModal from "../../../components/home/ProductDetails";
 
 // Import the modal component
 
@@ -29,13 +29,7 @@ export default function OrderSummary() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Order Summary</Text>
-        <View style={{ width: 28 }} />
-      </View>
+      <Header title="Order Summary" />
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Your existing content (unchanged) */}
@@ -113,7 +107,7 @@ export default function OrderSummary() {
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
           style={styles.requestButton}
-          onPress={() => setModalVisible(true)}
+          onPress={() => router.push("/(tabs)/home/PaymentDetails")}
         >
           <Text style={styles.requestButtonText}>Request Delivery Offer</Text>
         </TouchableOpacity>
@@ -130,16 +124,6 @@ export default function OrderSummary() {
 
 // Your existing styles (unchanged)
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: TEAL,
-    height: 170,
-    paddingTop: 10,
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerTitle: { color: "#fff", fontSize: 16, fontWeight: "bold" },
   container: {
     flex: 1,
     backgroundColor: "#fff",

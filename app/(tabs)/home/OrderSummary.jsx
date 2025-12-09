@@ -7,21 +7,23 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import Header from "../../../components/common/Header";
 import ProductDetailsModal from "../../../components/home/ProductDetails";
-
-// Import the modal component
 
 const TEAL = "#008080";
 
 export default function OrderSummary() {
   const [paymentAdded, setPaymentAdded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleAddPayment = () => {
+    // This is where you would navigate to the payment details screen
+    console.log("Navigating to Add Payment Method...");
+  };
 
   return (
     <KeyboardAvoidingView
@@ -32,7 +34,7 @@ export default function OrderSummary() {
       <Header title="Order Summary" />
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Your existing content (unchanged) */}
+        {/* Product Card */}
         <View style={styles.productCard}>
           <Image
             source={{ uri: "https://via.placeholder.com/80" }}
@@ -57,6 +59,7 @@ export default function OrderSummary() {
           <Text style={styles.productPrice}>$100</Text>
         </View>
 
+        {/* Price Summary */}
         <Text style={styles.sectionTitle}>Price Summary</Text>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Product Price</Text>
@@ -80,25 +83,16 @@ export default function OrderSummary() {
           <Text style={styles.totalAmount}>$139.59</Text>
         </View>
 
-        <View
-          style={[
-            styles.paymentRowBig,
-            paymentAdded && styles.paymentRowActive,
-          ]}
+        {/* Payment Button (Styled to match UI) */}
+        <TouchableOpacity
+          style={styles.paymentButtonUi}
+          onPress={handleAddPayment}
         >
-          <View>
-            <Text style={styles.paymentLabelBig}>Add Payment Method</Text>
-            <Text style={styles.paymentHint}>Required to complete order</Text>
-          </View>
-          <Switch
-            value={paymentAdded}
-            onValueChange={setPaymentAdded}
-            trackColor={{ false: "#ddd", true: TEAL }}
-            thumbColor={paymentAdded ? "#fff" : "#f4f4f4"}
-            ios_backgroundColor="#ddd"
-            style={styles.bigSwitch}
-          />
-        </View>
+          <Text style={styles.paymentLabelBig}>Add Payment Method</Text>
+          <Text style={styles.chevronButton}>❯
+
+</Text>
+        </TouchableOpacity>
 
         <View style={{ height: 120 }} />
       </ScrollView>
@@ -113,7 +107,7 @@ export default function OrderSummary() {
         </TouchableOpacity>
       </View>
 
-      {/* Modal - Clean & Reusable */}
+      {/* Modal */}
       <ProductDetailsModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -122,7 +116,6 @@ export default function OrderSummary() {
   );
 }
 
-// Your existing styles (unchanged)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -175,9 +168,9 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 9,
-    fontWeight: "700",
-    color: "#444",
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#1E1E1E",
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
@@ -186,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 8,
   },
-  priceLabel: { fontSize: 13, color: "#666" },
+  priceLabel: { fontSize: 14, color: "#6C7278" },
   priceValue: { fontSize: 13, fontWeight: "600", color: "#333" },
   totalRow: {
     flexDirection: "row",
@@ -198,22 +191,39 @@ const styles = StyleSheet.create({
   },
   totalLabel: { fontSize: 15, fontWeight: "bold", color: "#333" },
   totalAmount: { fontSize: 18, fontWeight: "bold", color: TEAL },
-  paymentRowBig: {
+  
+  // Custom button style matching the UI image (white, shadow, rounded)
+  paymentButtonUi: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#f8fffe",
-    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center", // Vertically centers the content (text and chevron)
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
     paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingVertical: 14,
     marginTop: 24,
-    borderWidth: 1.5,
-    borderColor: "#eee",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
   },
-  paymentRowActive: { borderColor: TEAL },
-  paymentLabelBig: { fontSize: 15, fontWeight: "bold", color: "#333" },
-  paymentHint: { fontSize: 11, color: "#666", marginTop: 2 },
-  bigSwitch: { transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] },
+  
+  // Style for the 'Add Payment Method' text
+  paymentLabelBig: {
+    fontSize: 14,
+    fontWeight: "500",
+    fontFamily:"Inter",
+    color: "#2C2C2E",
+    lineHeight: 24, // Explicit line height helps achieve vertical centering
+  },
+  
+  // Style for the '>' chevron
+  chevronButton: {
+    fontSize: 17,
+    marginLeft: 8,
+    color: "#2C2C2E",
+    fontWeight: "400",
+    lineHeight: 24, // Matches line height of the label for perfect vertical alignment
+  },
+  
   bottomButtonContainer: {
     paddingHorizontal: 20,
     paddingVertical: 12,

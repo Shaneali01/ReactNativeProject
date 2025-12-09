@@ -58,7 +58,7 @@ export default function PlaceOrder2() {
           />
           <View style={styles.currencyBox}>
             <Text style={styles.currencyText}>PKR</Text>
-            <Ionicons name="chevron-down" size={14} color="#fff" />
+            <Ionicons name="chevron-down" size={14} color="#1E1E1E" />
           </View>
         </View>
 
@@ -142,17 +142,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    paddingVertical: 20,
     marginTop: -20,
   },
 
   label: {
     marginTop: 14,
     marginBottom: 5,
-    fontSize: 8,
-    fontWeight: "700",
-    color: "#444",
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#1E1E1E",
     textTransform: "uppercase",
-    letterSpacing: 0.5,
+    letterSpacing: 0,
   },
 
   smallInput: {
@@ -161,8 +162,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 27,
+    paddingVertical: 14,
     backgroundColor: "#fff",
   },
   smallText: { fontSize: 12, color: "#666" },
@@ -183,14 +184,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   currencyBox: {
-    backgroundColor: TEAL,
     paddingHorizontal: 10,
     paddingVertical: 10,
+    borderLeftWidth: 1,
+    borderLeftColor: "#ddd",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-  currencyText: { color: "#fff", fontWeight: "600", fontSize: 11, marginRight: 4 },
+  currencyText: { color: "#1E1E1E", fontWeight: "600", fontSize: 12, marginRight: 4 },
 
   quantityContainer: {
     flexDirection: "row",

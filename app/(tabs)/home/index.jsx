@@ -12,14 +12,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
+// NOTE: You MUST ensure these paths are correct relative to your OrderScreen.js file.
+// Assuming Fab is in 'components/common/Fab'
 import Fab from "../../../components/common/Fab";
+// Assuming TravelContent is in 'components/home/Travel'
 import TravelContent from "../../../components/home/Travel";
 
-// 1. IMPORT YOUR LOCAL IMAGE HERE
-// **IMPORTANT:** You must ensure this path is correct relative to your OrderScreen.js file.
-const AirplaneRouteImage = require("../../..//assets/images/airplanedashes.png");
+// Update this path to where your image is located
+const AirplaneRouteImage = require("../../../assets/images/airplanedashes.png"); 
 
-// YOUR ORIGINAL DATA - UNTOUCHED
+// --- DUMMY DATA ---
 const orderData = [
   {
     id: "1",
@@ -32,6 +35,8 @@ const orderData = [
     to: "Pakistan",
     toFlag: "🇵🇰",
     image: "https://images.unsplash.com/photo-1592286927505-b0e2967ddc93?w=200",
+    paymentStatus: "Payment Verified",
+    Reward: "50",
   },
   {
     id: "2",
@@ -44,6 +49,8 @@ const orderData = [
     to: "Pakistan",
     toFlag: "🇵🇰",
     image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=200",
+    paymentStatus: "Payment Verified",
+    Reward: "50",
   },
   {
     id: "3",
@@ -56,6 +63,7 @@ const orderData = [
     to: "Pakistan",
     toFlag: "🇵🇰",
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200",
+    Reward: "50",
   },
   {
     id: "4",
@@ -68,9 +76,12 @@ const orderData = [
     to: "Pakistan",
     toFlag: "🇵🇰",
     image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200",
+    paymentStatus: "",
+    Reward: "50",
   },
 ];
 
+// --- OrderContent Component (List of Cards) ---
 const OrderContent = ({ orderData }) => {
   const renderItem = ({ item }) => (
     <View style={styles.card}>
@@ -86,6 +97,16 @@ const OrderContent = ({ orderData }) => {
           <Text style={styles.cardDate}>Date: {item.date}</Text>
           <Text style={styles.quantity}>Quantity: {item.quantity}</Text>
         </View>
+        <View style={styles.new}>
+          <Text style={item.paymentStatus ? styles.payment : null}>
+            {" "}
+            {item.paymentStatus}
+          </Text>
+          <Text style={item.Reward ? styles.reward : null}>
+            {" "}
+            {item.Reward ? `Reward: $${item.Reward}` : null}{" "}
+          </Text>
+        </View>
 
         <View style={styles.bottomRow}>
           <View style={styles.travelRoute}>
@@ -93,10 +114,10 @@ const OrderContent = ({ orderData }) => {
             <Text style={styles.routeText}>{item.from}</Text>
             <Text style={styles.flag}>{item.fromFlag}</Text>
 
-            {/* 2. REPLACED TEXT/DASHES WITH IMAGE */}
+            {/* Airplane Image */}
             <Image
               source={AirplaneRouteImage}
-              style={styles.airplaneIcon} // Using new style for size
+              style={styles.airplaneIcon} 
               resizeMode="contain"
             />
 
@@ -125,108 +146,138 @@ const OrderContent = ({ orderData }) => {
   );
 };
 
+// --- OrderScreen Component (Main Screen) ---
 const OrderScreen = () => {
   const [activeTab, setActiveTab] = useState("Orders");
   const [searchText, setSearchText] = useState("");
+  
   const filteredOrders = orderData.filter(
     (item) =>
       item.title.toLowerCase().includes(searchText.toLowerCase()) ||
       item.from.toLowerCase().includes(searchText.toLowerCase()) ||
       item.to.toLowerCase().includes(searchText.toLowerCase())
   );
+  
   const renderContent = () => {
     if (activeTab === "Orders") {
+      // The Orders tab uses the FlatList inside OrderContent
       return <OrderContent orderData={filteredOrders} />;
     }
+    // The Travel tab uses the imported TravelContent
     return <TravelContent />;
   };
+  
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.tabContainer}>
-          <TouchableOpacity
-            style={[styles.tab, activeTab === "Orders" && styles.activeTab]}
-            onPress={() => setActiveTab("Orders")}
-            accessibilityRole="button"
-            accessibilityLabel="Show Orders"
-          >
-            <Text
-              style={[
-                styles.tabText,
-                activeTab === "Orders" && styles.activeTabText,
-              ]}
-            >
-              Orders
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, activeTab === "Travel" && styles.activeTab]}
-            onPress={() => setActiveTab("Travel")}
-            accessibilityRole="button"
-            accessibilityLabel="Show Travel Requests"
-          >
-            <Text
-              style={[
-                styles.tabText,
-                activeTab === "Travel" && styles.activeTabText,
-              ]}
-            >
-              Travel
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View style={styles.fullScreenContainer}>
+      
+      {/* 1. Full-width header background that extends under the status bar */}
+      <View style={styles.headerBackground} />
 
-      <View style={styles.contentArea}>
-        {/* Search Bar */}
-        <View style={styles.searchBarContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            value={searchText}
-            onChangeText={setSearchText}
-            placeholderTextColor="#6C7278"
-          />
-          <Ionicons
-            name="search"
-            size={18}
-            color="#999"
-            style={styles.searchIcon}
-          />
-          <TouchableOpacity style={styles.filterButton}>
-            <Ionicons name="filter" size={18} color="#008080" />
-          </TouchableOpacity>
+      {/* 2. SafeAreaView wraps the content that needs padding (the header content and main screen) */}
+      <SafeAreaView style={styles.safeAreaContent}>
+        
+        {/* Header Content (Tabs) */}
+        <View style={styles.header}>
+          <View style={styles.tabContainer}>
+            <TouchableOpacity
+              style={[styles.tab, activeTab === "Orders" && styles.activeTab]}
+              onPress={() => setActiveTab("Orders")}
+              accessibilityRole="button"
+              accessibilityLabel="Show Orders"
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === "Orders" && styles.activeTabText,
+                ]}
+              >
+                Orders
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tab, activeTab === "Travel" && styles.activeTab]}
+              onPress={() => setActiveTab("Travel")}
+              accessibilityRole="button"
+              accessibilityLabel="Show Travel Requests"
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === "Travel" && styles.activeTabText,
+                ]}
+              >
+                Travel
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        {/* Content */}
-        {renderContent()}
+        {/* Main Content Area (Search + List) */}
+        <View style={styles.contentArea}>
+          {/* Search Bar */}
+          <View style={styles.searchBarContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search"
+              value={searchText}
+              onChangeText={setSearchText}
+              placeholderTextColor="#6C7278"
+            />
+            <Ionicons
+              name="search"
+              size={18}
+              color="#999"
+              style={styles.searchIcon}
+            />
+            <TouchableOpacity style={styles.filterButton}>
+              <Ionicons name="filter" size={18} color="#008080" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Content (Orders or Travel) */}
+          {renderContent()}
+        </View>
+      </SafeAreaView>
+
+      {/* FAB Container: POSITIONED ABSOLUTELY ON TOP OF EVERYTHING ELSE */}
+      <View style={styles.fabContainer}> 
+        <Fab
+          link={
+            activeTab === "Orders"
+              ? "/(tabs)/home/PlaceOrder"
+              : "/(tabs)/home/new-travel"
+          }
+        />
       </View>
-      {/* FAB - Fixed & Working */}
-      <Fab
-        link={
-          activeTab === "Orders"
-            ? "/(tabs)/home/PlaceOrder"
-            : "/(tabs)/home/new-travel"
-        }
-      />
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default OrderScreen;
 
-// YOUR EXACT ORIGINAL STYLES — MODIFIED TO REMOVE 'dashes' AND ADD 'airplaneIcon'
+// --- STYLES ---
 const styles = StyleSheet.create({
-  container: {
+  fullScreenContainer: {
     flex: 1,
+    backgroundColor: "#FFF",
+  },
+  headerBackground: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 140 : 160,
     backgroundColor: "#008080",
+    zIndex: 0,
+  },
+  safeAreaContent: {
+    flex: 1,
+    zIndex: 1,
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 15 : 15,
-    paddingBottom: 30,
-    backgroundColor: "#008080",
+    paddingTop: 60,
+    paddingBottom: 40,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -264,7 +315,7 @@ const styles = StyleSheet.create({
   },
   contentArea: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#FFFF",
     paddingHorizontal: 20,
     paddingTop: 20,
     borderTopLeftRadius: 30,
@@ -317,7 +368,7 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: 78,
-    height: 80,
+    height: 82,
     borderRadius: 8,
     marginRight: 12,
     backgroundColor: "#F0F0F0",
@@ -350,9 +401,18 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     fontWeight: "400",
   },
-  new: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  payment: {
+    fontSize: 8,
+    backgroundColor: "#DBFCE7",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 100,
+    color: "#08843C",
+  },
+  reward: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#08843C",
   },
   bottomRow: {
     flexDirection: "row",
@@ -362,18 +422,16 @@ const styles = StyleSheet.create({
   travelRoute: {
     flexDirection: "row",
     alignItems: "center",
-    // We kept the justification implicit but it was originally 'space-between' which isn't necessary here
   },
   routeText: {
     fontSize: 12,
-    color: "#0000", // This was originally transparent, changing to visible black for common use
+    color: "#000", // Fixed color
     fontWeight: "500",
   },
   flag: {
     fontSize: 11,
     marginHorizontal: 4,
   },
-  // REMOVED 'dashes' STYLE
   quantity: {
     fontSize: 10,
     color: "#6B7280",
@@ -391,10 +449,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#999",
   },
-  // NEW STYLE FOR THE AIRPLANE IMAGE
   airplaneIcon: {
     width: 90,
     height: 40,
     marginHorizontal: 4,
+  },
+  // --- FAB Fix Style ---
+  fabContainer: {
+    position: 'absolute',
+    bottom: 30, // Position it 30 units from the bottom
+    right: 20,  // Position it 20 units from the right
+    zIndex: 100, // Ensure it is on top of all other content
   },
 });

@@ -1,281 +1,242 @@
-// app/(tabs)/profile/components/Reviews.jsx
 import { Ionicons } from "@expo/vector-icons";
-import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-} from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
-const TEAL = "#008080";
+// --- Constants ---
+const PRIMARY_COLOR = "#1F2937"; // Dark text/headings
+const GRAY_TEXT = "#6B7280"; // Location and date text
+const STAR_COLOR = "#954D0E"; // Gold color for stars
+const Normal_Star="#FF9500"
 
-export default function Reviews() {
-  const reviews = [
-    {
-      id: 1,
-      reviewerName: "Sarah Johnson",
-      reviewerImage: "https://i.pravatar.cc/150?img=45",
-      rating: 5,
-      date: "2 days ago",
-      comment: "Excellent traveler! Very reliable and the item arrived in perfect condition. Great communication throughout the process. Highly recommend!",
-      product: "iPhone 15 Pro Max",
-    },
-    {
-      id: 2,
-      reviewerName: "Michael Chen",
-      reviewerImage: "https://i.pravatar.cc/150?img=33",
-      rating: 5,
-      date: "1 week ago",
-      comment: "Outstanding service! The delivery was faster than expected and the product was well protected. Will definitely work with again.",
-      product: "MacBook Pro 16",
-    },
-    {
-      id: 3,
-      reviewerName: "Emma Williams",
-      reviewerImage: "https://i.pravatar.cc/150?img=47",
-      rating: 4,
-      date: "2 weeks ago",
-      comment: "Good experience overall. Item arrived safely and on time. Communication could be better but no major issues.",
-      product: "Sony WH-1000XM5",
-    },
-    {
-      id: 4,
-      reviewerName: "David Martinez",
-      reviewerImage: "https://i.pravatar.cc/150?img=51",
-      rating: 5,
-      date: "3 weeks ago",
-      comment: "Professional and trustworthy! Made the whole process smooth and easy. Would highly recommend to others.",
-      product: "iPad Air",
-    },
-  ];
+// --- Dummy Data ---
+const reviews = [
+  {
+    id: 1,
+    name: "Davis Kim",
+    location: "Los Angeles, CA",
+    date: "Jan 20, 2025",
+    rating: 4,
+    isTopRated: false,
+    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+    avatarUrl: "https://i.pravatar.cc/150?img=68", // Random avatar
+  },
+  {
+    id: 2,
+    name: "Aisha Khan",
+    location: "New York, NY",
+    date: "Jan 15, 2025",
+    rating: 5,
+    isTopRated: false,
+    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+    avatarUrl: "https://i.pravatar.cc/150?img=52",
+  },
+  {
+    id: 3,
+    name: "John Smith",
+    location: "London, UK",
+    date: "Jan 10, 2025",
+    rating: 3,
+    isTopRated: false,
+    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+    avatarUrl: "https://i.pravatar.cc/150?img=33",
+  },
+];
 
+// --- ReviewCard Component ---
+const ReviewCard = ({ review }) => {
+  // Helper function to render stars
   const renderStars = (rating) => {
-    return (
-      <View style={styles.starsContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Ionicons
-            key={star}
-            name={star <= rating ? "star" : "star-outline"}
-            size={14}
-            color={star <= rating ? "#FFD700" : "#ddd"}
-          />
-        ))}
-      </View>
-    );
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Ionicons
+          key={i}
+          name={i <= rating ? "star" : "star-outline"}
+          size={16}
+          color={i <= rating ? Normal_Star : GRAY_TEXT}
+          style={styles.star}
+        />
+      );
+    }
+    return <View style={styles.starContainer}>{stars}</View>;
   };
 
   return (
-    <ScrollView 
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* Overall Rating Summary */}
-      <View style={styles.summaryCard}>
-        <View style={styles.ratingCircle}>
-          <Text style={styles.ratingNumber}>4.8</Text>
-          <View style={styles.starsContainer}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Ionicons key={star} name="star" size={12} color="#FFD700" />
-            ))}
+    <View style={styles.reviewCard}>
+      <Image
+        source={{ uri: review.avatarUrl }}
+        style={styles.avatar}
+        resizeMode="cover"
+      />
+
+      <View style={styles.reviewContent}>
+        <View style={styles.infoRow}>
+          <View>
+            <Text style={styles.name}>{review.name}</Text>
+            <Text style={styles.location}>{review.location}</Text>
           </View>
-          <Text style={styles.totalReviews}>25 reviews</Text>
+          {review.isTopRated && (
+            <View style={styles.topRatedBadge}>
+              <Ionicons name="star" size={14} color={STAR_COLOR} />
+              <Text style={styles.topRatedText}>Top Rated</Text>
+            </View>
+          )}
         </View>
 
-        <View style={styles.ratingBars}>
-          {[
-            { stars: 5, percentage: 85 },
-            { stars: 4, percentage: 10 },
-            { stars: 3, percentage: 3 },
-            { stars: 2, percentage: 2 },
-            { stars: 1, percentage: 0 },
-          ].map((item) => (
-            <View key={item.stars} style={styles.ratingBarRow}>
-              <Text style={styles.starLabel}>{item.stars}★</Text>
-              <View style={styles.barBackground}>
-                <View 
-                  style={[styles.barFill, { width: `${item.percentage}%` }]} 
-                />
-              </View>
-              <Text style={styles.percentageText}>{item.percentage}%</Text>
-            </View>
-          ))}
+        <View style={styles.ratingDateRow}>
+          {renderStars(review.rating)}
+          <Text style={styles.dot}>•</Text>
+          <Text style={styles.date}>{review.date}</Text>
         </View>
+
+        <Text style={styles.reviewText}>{review.text}</Text>
       </View>
+    </View>
+  );
+};
 
-      {/* Individual Reviews */}
-      {reviews.map((review) => (
-        <View key={review.id} style={styles.reviewCard}>
-          <View style={styles.reviewHeader}>
-            <Image
-              source={{ uri: review.reviewerImage }}
-              style={styles.reviewerImage}
-            />
-            <View style={styles.reviewerInfo}>
-              <Text style={styles.reviewerName}>{review.reviewerName}</Text>
-              <View style={styles.ratingRow}>
-                {renderStars(review.rating)}
-                <Text style={styles.dateText}> • {review.date}</Text>
-              </View>
-            </View>
-          </View>
+// --- Main Component ---
+export default function Reviews() {
+  // We use ListHeaderComponent for the "Reviews" title and "Top Rated" badge
+  const ReviewListHeader = () => (
+    <View style={styles.listHeader}>
+      <Text style={styles.headerTitle}>Reviews</Text>
+      <View style={styles.topRatedBadge}>
+        <Ionicons name="star" size={14} color={STAR_COLOR} />
+        <Text style={styles.topRatedText}>Top Rated</Text>
+      </View>
+    </View>
+  );
 
-          <Text style={styles.reviewComment}>{review.comment}</Text>
-
-          <View style={styles.productTag}>
-            <Ionicons name="cube-outline" size={14} color={TEAL} />
-            <Text style={styles.productTagText}>{review.product}</Text>
-          </View>
-        </View>
-      ))}
-
-      <View style={{ height: 20 }} />
-    </ScrollView>
+  return (
+    <FlatList
+      data={reviews}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <ReviewCard review={item} />}
+      ListHeaderComponent={ReviewListHeader}
+      contentContainerStyle={styles.listContainer}
+      showsVerticalScrollIndicator={false}
+      // Add a separator for better visual distinction if needed
+      // ItemSeparatorComponent={() => <View style={styles.separator} />} 
+    />
   );
 }
 
+// --- Styles ---
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  listContainer: {
+    // Add margin top to push content below the tabs in the parent ProfileScreen
+    paddingTop: 30, 
+    // Ensure horizontal padding is controlled by the parent View for the whole content area
+    paddingHorizontal: 0, 
+    paddingBottom: 100,
+  },
+  
+  // Header styles (for the main "Reviews" title)
+  listHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 16, // Match padding of cards
+    paddingTop: 16,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'semibold',
+    color: '#1A1C1E',
+    fontfamily: 'Inter',
   },
 
-  summaryCard: {
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
-    flexDirection: "row",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: "#f0f0f0",
-  },
-  ratingCircle: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 20,
-    paddingRight: 20,
-    borderRightWidth: 1,
-    borderRightColor: "#f0f0f0",
-  },
-  ratingNumber: {
-    fontSize: 36,
-    fontWeight: "700",
-    color: TEAL,
-    marginBottom: 4,
-  },
-  totalReviews: {
-    fontSize: 12,
-    color: "#999",
-    marginTop: 4,
-  },
-
-  ratingBars: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  ratingBarRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 3,
-  },
-  starLabel: {
-    fontSize: 12,
-    color: "#666",
-    width: 25,
-  },
-  barBackground: {
-    flex: 1,
-    height: 6,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 3,
-    marginHorizontal: 8,
-    overflow: "hidden",
-  },
-  barFill: {
-    height: "100%",
-    backgroundColor: "#FFD700",
-    borderRadius: 3,
-  },
-  percentageText: {
-    fontSize: 11,
-    color: "#999",
-    width: 35,
-    textAlign: "right",
-  },
-
+  // Review Card styles
   reviewCard: {
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: "#f0f0f0",
-  },
-
-  reviewHeader: {
     flexDirection: "row",
-    marginBottom: 12,
+    backgroundColor: "#fff",
+    marginBottom: 2,
+    marginHorizontal: 16,
+    padding: 8,
+    borderColor: "#DCDCDC",
+    borderWidth: 1,
+    marginVertical: 10,
+    borderRadius: 10,
+    // Removed border and shadow for a cleaner look consistent with the image
   },
-  reviewerImage: {
-    width: 48,
-    height: 48,
+  avatar: {
+    width: 34,
+    height: 34,
     borderRadius: 24,
-    backgroundColor: "#f0f0f0",
     marginRight: 12,
+    backgroundColor: "#f0f0f0",
   },
-  reviewerInfo: {
+  reviewContent: {
     flex: 1,
-    justifyContent: "center",
   },
-  reviewerName: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#000",
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: 4,
   },
-  ratingRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  starsContainer: {
-    flexDirection: "row",
-    gap: 2,
-  },
-  dateText: {
+  name: {
     fontSize: 12,
-    color: "#999",
-    marginLeft: 4,
-  },
-
-  reviewComment: {
-    fontSize: 14,
-    color: "#666",
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-
-  productTag: {
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: "#E0F2F1",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 12,
-    gap: 4,
-  },
-  productTagText: {
-    fontSize: 12,
-    color: TEAL,
     fontWeight: "600",
+    color: '#1E1E1E',
+  },
+  location: {
+    fontSize: 12,
+    color: '#6C7278',
+    fontWeight: '400',
+    fontfamily: 'Inter',
+  },
+
+  // Rating and Date Row
+  ratingDateRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  starContainer: {
+    flexDirection: 'row',
+    marginRight: 8,
+  },
+  star: {
+    marginHorizontal: 1,
+  },
+  dot: {
+    fontSize: 12,
+    color: GRAY_TEXT,
+    marginHorizontal: 8,
+    lineHeight: 18,
+  },
+  date: {
+    fontSize: 12,
+    color: GRAY_TEXT,
+  },
+  
+  // Review Text
+  reviewText: {
+    fontSize: 12,
+    lineHeight: '100%',
+    color: '#6C7278',
+  },
+
+  // Top Rated Badge
+  topRatedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FEF9C3', // Light yellow background
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderWidth: 1,
+    borderColor: STAR_COLOR,
+    // Add margin to separate the badge from the rest of the content if used inside the card
+    // marginVertical: 4, 
+  },
+  topRatedText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#954D0E',
+    marginLeft: 4,
   },
 });

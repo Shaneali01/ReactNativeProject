@@ -1,5 +1,7 @@
 import { Tabs, useSegments } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
+// If using 'react-native-safe-area-context', you would import useSafeAreaInsets here,
+// but we will rely on default navigation behavior first.
 
 const TINT_COLOR = '#008080';
 const INACTIVE_COLOR = '#999';
@@ -21,24 +23,23 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: TINT_COLOR,
         tabBarInactiveTintColor: INACTIVE_COLOR,
-        tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: '600',
-          textTransform: 'capitalize',
-        },
         tabBarStyle: {
-          height: 70,
+          minHeight: 60, // Common default tab bar height
           borderTopWidth: 1,
           borderTopColor: '#E0E0E0',
           backgroundColor: '#fff',
           display: hideTabBar ? 'none' : 'flex',
         },
         tabBarItemStyle: {
-          paddingTop: 8,
-          paddingBottom: 10,
+          paddingVertical: 0, // Ensure no vertical padding is added here
         },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+          textTransform: 'capitalize',
+        },
+        tabBarIcon: () => null, 
         tabBarHideOnKeyboard: false,
-        tabBarIcon: () => null,
       }}
     >
       {/* Home */}
@@ -152,9 +153,11 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
+  // We've added flexGrow: 1 and made it vertically center the content.
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexGrow: 1, // Allows the container to fill the available vertical space
     width: 60,
   },
   icon: {
@@ -162,8 +165,9 @@ const styles = StyleSheet.create({
     height: 26,
   },
   activeLine: {
+    // Top is now relative to the iconContainer, which is well-centered.
     position: 'absolute',
-    top: -8,
+    top: -8, 
     height: 3,
     width: 30,
     backgroundColor: TINT_COLOR,

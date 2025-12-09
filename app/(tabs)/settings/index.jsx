@@ -31,17 +31,15 @@ export default function Settings() {
             source={{ uri: "https://randomuser.me/api/portraits/men/86.jpg" }}
             style={styles.avatar}
           />
-          <View style={styles.profileInfo}>
-            <Text style={styles.name}>Ibrar Naveed</Text>
-            <Text style={styles.joined}>Joined Date: 29/7/2025</Text>
-          </View>
+          <Text style={styles.name}>Ibrar Naveed</Text>
+          <Text style={styles.joined}>Joined Date: 29/7/2025</Text>
+          
+          {/* My Profile Button */}
+          <TouchableOpacity onPress={() => router.push("/(profile)")} style={styles.profileButton}>
+            <Text style={styles.profileButtonText}>My Profile</Text>
+            <Ionicons name="chevron-forward" size={20} color={TEAL} />
+          </TouchableOpacity>
         </View>
-
-        {/* My Profile Button */}
-        <TouchableOpacity onPress={() => router.push("/(profile)")} style={styles.profileButton}>
-          <Text style={styles.profileButtonText}>My Profile</Text>
-          <Ionicons name="chevron-forward" size={20} color={TEAL} />
-        </TouchableOpacity>
 
         {/* Menu Items */}
         <View style={styles.menu}>
@@ -51,7 +49,7 @@ export default function Settings() {
             <Ionicons name="chevron-forward" size={24} color="#ccc" style={styles.arrow} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity onPress={() => router.push("/(tabs)/settings/Preferences")} style={styles.menuItem}>
             <Ionicons name="heart-outline" size={24} color="#666" />
             <Text style={styles.menuText}>Preferences</Text>
             <Ionicons name="chevron-forward" size={24} color="#ccc" style={styles.arrow} />
@@ -108,7 +106,6 @@ const styles = StyleSheet.create({
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   profileSection: {
-    flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 30,
@@ -118,6 +115,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
+    marginBottom: 15,
   },
   profileInfo: {
     marginLeft: 20,
@@ -131,26 +129,29 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#999",
     marginTop: 4,
+    marginBottom: 20,
   },
 
   profileButton: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#e0f2f1",
-    marginHorizontal: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 14,
+    backgroundColor: "#D8EBEB",
+    paddingHorizontal: 26,
+    paddingVertical: 8,
     borderRadius: 30,
+    width: "40px",
   },
   profileButtonText: {
-    fontSize: 15,
+    fontSize: 16,
     color: TEAL,
-    fontWeight: "600",
+    fontWeight: "500",
+    fontFamily:'inter',
+    lineHeight: '140%',
   },
 
   menu: {
-    marginTop: 30,
+    marginTop: 0,
   },
   menuItem: {
     flexDirection: "row",

@@ -142,11 +142,12 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 14,
     marginBottom: 5,
-    fontSize: 8,
-    fontWeight: "700",
-    color: "#444",
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#1E1E1E",
     textTransform: "uppercase",
     letterSpacing: 0.5,
+    lineHeight:'160%',
   },
 
   // Same input style as PlaceOrder2

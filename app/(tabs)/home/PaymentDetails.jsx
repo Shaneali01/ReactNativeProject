@@ -1,15 +1,16 @@
 // app/(tabs)/home/PaymentDetails.jsx
 
 import { Ionicons } from "@expo/vector-icons"; // Using Expo's standard icon library
+import { router } from "expo-router"; // Ensure router is imported for navigation
 import { useState } from "react";
 import {
-    Alert,
-    Clipboard,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Clipboard,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Header from "../../../components/common/Header"; // Assuming you have a reusable Header component
 
@@ -42,7 +43,9 @@ const AccountDetailRow = ({ title, value }) => {
 };
 
 export default function PaymentDetails() {
-  const [screenshotUri, setScreenshotUri] = useState(null);
+  // 👇 MODIFIED FOR TESTING: Set initial state to 'true' to make the button clickable immediately.
+  // 👇 REMEMBER TO CHANGE THIS BACK TO useState(null) FOR PRODUCTION.
+  const [screenshotUri, setScreenshotUri] = useState(true);
 
   // In a real app, this would use an image picker library like expo-image-picker
   const handleUploadScreenshot = () => {
@@ -64,10 +67,8 @@ export default function PaymentDetails() {
 
   const handleSubmitProof = () => {
     if (screenshotUri) {
-      Alert.alert("Payment Proof Submitted", "Your proof is being reviewed.", [
-        { text: "OK" },
-      ]);
-      // Navigate or perform submission logic here
+      // Navigate to the success page
+      router.push("/(tabs)/home/PaymentSuccess"); 
     } else {
       Alert.alert("Missing Screenshot", "Please upload the payment screenshot to proceed.", [
         { text: "OK" },
@@ -100,13 +101,13 @@ export default function PaymentDetails() {
         >
           {screenshotUri ? (
             <View style={styles.uploadedView}>
-              <Ionicons name="checkmark-circle" size={36} color={TEAL} />
+              <Ionicons name="checkmark-circle" size={20} color={TEAL} />
               <Text style={styles.uploadedText}>Screenshot Uploaded</Text>
               <Text style={styles.uploadHint}>Tap to change</Text>
             </View>
           ) : (
             <>
-              <Ionicons name="cloud-upload-outline" size={48} color="#999" />
+              <Ionicons name="cloud-upload-outline" size={40} color="#999" />
               <Text style={styles.uploadText}>
                 Tap to upload payment screenshot
               </Text>
@@ -124,16 +125,11 @@ export default function PaymentDetails() {
         <TouchableOpacity
           style={[styles.submitButton, !screenshotUri && styles.submitButtonDisabled]}
           onPress={handleSubmitProof}
-          disabled={!screenshotUri}
+          // The disabled prop is now effectively false because screenshotUri is true
+          disabled={!screenshotUri} 
         >
           <Text style={styles.submitButtonText}>Submit Payment Proof</Text>
         </TouchableOpacity>
-
-        <View style={styles.verificationBox}>
-          <Text style={styles.verificationText}>
-            Your payment will be verified within 24 hours
-          </Text>
-        </View>
       </View>
     </View>
   );
@@ -150,14 +146,16 @@ const styles = StyleSheet.create({
     padding: 16,
     marginVertical: 15,
     borderWidth: 1,
-    borderColor: TEAL,
+    borderColor: '#E5E7EB',
     alignItems: "center",
   },
   instructionText: {
     color: TEAL,
     fontSize: 13,
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "400",
+    lineHeight: 20,
+    fontStyle:"regular",
   },
   detailContainer: {
     flexDirection: "row",
@@ -169,11 +167,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#eee",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    borderColor: "#E5E7EB",
     elevation: 1,
   },
   detailContent: {
@@ -181,13 +175,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   detailTitle: {
-    fontSize: 11,
-    color: "#999",
+    fontSize: 12,
+    color: "#6C7278",
   },
   detailValue: {
     fontSize: 14,
-    fontWeight: "600",
-    color: "#333",
+    fontWeight: "400",
+    color: "#2C2C2E",
     marginTop: 2,
   },
   copyButton: {
@@ -200,9 +194,9 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     borderColor: "#ddd",
     borderRadius: 16,
-    paddingVertical: 40,
-    marginTop: 20,
-    backgroundColor: "#f9f9f9",
+    paddingVertical: 30,
+    marginTop: 2,
+    backgroundColor: "#F9FAFB",
   },
   uploadBoxActive: {
     borderColor: TEAL,
@@ -210,9 +204,9 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "400",
     color: "#666",
-    marginTop: 10,
+    marginTop: 8,
   },
   uploadHint: {
     fontSize: 12,
@@ -232,7 +226,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: "#fff",
-    borderTopWidth: 1,
     borderTopColor: "#eee",
   },
   submitButton: {
@@ -243,12 +236,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   submitButtonDisabled: {
-    backgroundColor: "#ccc",
+    // Since screenshotUri is true, this style is currently ignored.
+    backgroundColor: TEAL, 
   },
   submitButtonText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight: "500",
+    fontStyle:"medium"
   },
   verificationBox: {
     backgroundColor: "#fff6e5", // A light, warm color for the hint

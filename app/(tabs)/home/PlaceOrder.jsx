@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
 
   // Smaller Next Button (same as PlaceOrder2)
   bottomButtonContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
     paddingVertical: 12,
     backgroundColor: "#fff",
     borderTopWidth: 1,
@@ -208,13 +208,14 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: TEAL,
-    paddingVertical: 10,
+    paddingVertical: 13,
     borderRadius: 24,
     alignItems: "center",
+    marginBottom: 12
   },
   nextButtonText: {
     color: "#fff",
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
 });

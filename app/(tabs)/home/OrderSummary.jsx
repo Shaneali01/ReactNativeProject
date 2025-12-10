@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import Header from "../../../components/common/Header";
 import ProductDetailsModal from "../../../components/home/ProductDetails";
@@ -21,8 +21,7 @@ export default function OrderSummary() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleAddPayment = () => {
-    // This is where you would navigate to the payment details screen
-    console.log("Navigating to Add Payment Method...");
+    router.push("/(tabs)/home/PaymentDetails");
   };
 
   return (
@@ -89,9 +88,7 @@ export default function OrderSummary() {
           onPress={handleAddPayment}
         >
           <Text style={styles.paymentLabelBig}>Add Payment Method</Text>
-          <Text style={styles.chevronButton}>❯
-
-</Text>
+          <Text style={styles.chevronButton}>❯</Text>
         </TouchableOpacity>
 
         <View style={{ height: 120 }} />
@@ -101,7 +98,6 @@ export default function OrderSummary() {
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
           style={styles.requestButton}
-          onPress={() => router.push("/(tabs)/home/PaymentDetails")}
         >
           <Text style={styles.requestButtonText}>Request Delivery Offer</Text>
         </TouchableOpacity>
@@ -191,45 +187,45 @@ const styles = StyleSheet.create({
   },
   totalLabel: { fontSize: 15, fontWeight: "bold", color: "#333" },
   totalAmount: { fontSize: 18, fontWeight: "bold", color: TEAL },
-  
+
   // Custom button style matching the UI image (white, shadow, rounded)
   paymentButtonUi: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center", // Vertically centers the content (text and chevron)
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    paddingHorizontal: 18,
-    paddingVertical: 14,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     marginTop: 24,
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#D9D9D9",
   },
-  
+
   // Style for the 'Add Payment Method' text
   paymentLabelBig: {
     fontSize: 14,
     fontWeight: "500",
-    fontFamily:"Inter",
+    fontFamily: "Inter",
     color: "#2C2C2E",
     lineHeight: 24, // Explicit line height helps achieve vertical centering
   },
-  
+
   // Style for the '>' chevron
   chevronButton: {
-    fontSize: 17,
-    marginLeft: 8,
-    color: "#2C2C2E",
-    fontWeight: "400",
+    fontSize: 12,
+    marginLeft: 14,
+    color: "#6C7278",
+    fontWeight: "200",
     lineHeight: 24, // Matches line height of the label for perfect vertical alignment
   },
-  
+
   bottomButtonContainer: {
     paddingHorizontal: 20,
     paddingVertical: 12,
     backgroundColor: "#fff",
-    borderTopWidth: 1,
     borderTopColor: "#eee",
+    marginBottom: 50,
   },
   requestButton: {
     backgroundColor: TEAL,
@@ -237,5 +233,5 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
   },
-  requestButtonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  requestButtonText: { color: "#fff", fontSize: 14, fontWeight: "bold",fontStyle:"medium",lineHeight:'140%' },
 });

@@ -1,6 +1,5 @@
 // app/(tabs)/inbox/Offer.jsx
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -10,6 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Header from "../../../components/common/Header";
+import SearchBar from "../../../components/common/SearchBar";
 
 const TEAL = "#008080";
 
@@ -54,13 +55,7 @@ export default function Offer() {
   return (
     <>
       {/* Teal Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Offers</Text>
-        <View style={{ width: 28 }} />
-      </View>
+   <Header title="Offers" />
 
       {/* Main White Rounded Container */}
       <ScrollView
@@ -69,10 +64,7 @@ export default function Offer() {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Search Bar */}
-        <View style={styles.searchBar}>
-          <Ionicons name="search" size={20} color="#999" />
-          <Text style={styles.searchPlaceholder}>Search</Text>
-        </View>
+       <SearchBar/>
 
         {/* Tabs */}
         <View style={styles.tabContainer}>
@@ -123,13 +115,10 @@ export default function Offer() {
                 <Text style={styles.buyerName}>{offer.buyerName}</Text>
                 <View style={styles.ratingRow}>
                   <Ionicons name="star" size={14} color="#FFD700" />
+                                    <Ionicons name="star" size={14} color="#FFD700" />
+                  <Ionicons name="star" size={14} color="#FFD700" />
+
                   <Text style={styles.ratingText}>{offer.buyerRating}</Text>
-                  {offer.paymentVerified && (
-                    <>
-                      <View style={styles.dot} />
-                      <Text style={styles.verifiedText}>Payment Verified</Text>
-                    </>
-                  )}
                 </View>
               </View>
               <Ionicons name="chatbubble-outline" size={22} color={TEAL} />
@@ -197,14 +186,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     backgroundColor: "#f0f0f0",
-    borderRadius: 12,
+    borderRadius: 100,
     padding: 4,
   },
   tab: {
     flex: 1,
     paddingVertical: 10,
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 100,
   },
   activeTab: {
     backgroundColor: "#fff",
@@ -215,7 +204,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   tabText: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#888",
   },
   activeTabText: {
@@ -243,13 +232,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   productName: {
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "600",
     color: "#222",
     flex: 1,
   },
   date: {
-    fontSize: 12,
+    fontSize: 8,
     color: "#888",
   },
 
@@ -265,7 +254,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   buyerName: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "600",
     color: "#333",
   },
@@ -275,7 +264,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   ratingText: {
-    fontSize: 13,
+    fontSize: 10,
     color: "#555",
     marginLeft: 4,
   },
@@ -298,8 +287,8 @@ const styles = StyleSheet.create({
   },
   rejectButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 10,
+    borderRadius: 100,
     backgroundColor: "#ffe6e6",
     alignItems: "center",
     marginRight: 10,
@@ -307,18 +296,18 @@ const styles = StyleSheet.create({
   rejectText: {
     color: "#e74c3c",
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 12,
   },
   acceptButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 10,
+    borderRadius: 100,
     backgroundColor: TEAL,
     alignItems: "center",
   },
   acceptText: {
     color: "#fff",
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 12,
   },
 });

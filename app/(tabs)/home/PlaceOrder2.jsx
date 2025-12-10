@@ -179,8 +179,9 @@ const styles = StyleSheet.create({
   },
   smallPriceInput: {
     flex: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: 27,
     paddingVertical: 10,
+    paddingVertical: 14,
     fontSize: 12,
   },
   currencyBox: {
@@ -228,33 +229,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,        // Reduced
     backgroundColor: "#fff",
-    borderTopWidth: 1,
     borderTopColor: "#eee",
     gap: 10,
+    marginBottom: 20,
   },
   backBtn: {
     flex: 1,
     paddingVertical: 10,        // Smaller
     borderRadius: 24,           // Slightly smaller
     borderWidth: 1.5,
-    borderColor: TEAL,
+    borderColor: '#DCDCDC',
     alignItems: "center",
   },
   backBtnText: {
     color: TEAL,
-    fontWeight: "bold",
-    fontSize: 14,               // Smaller text
+    fontWeight: "500",
+    fontSize: 14,  
+    paddingVertical: 2,            // Smaller text
   },
   placeOrderBtn: {
     flex: 2,
-    backgroundColor: TEAL,
-    paddingVertical: 10,        // Smaller
+    backgroundColor:TEAL ,
+    paddingVertical: 12,        // Smaller
     borderRadius: 24,           // Smaller radius
     alignItems: "center",
   },
   placeOrderBtnText: {
     color: "#fff",
     fontSize: 14,               // Smaller text
-    fontWeight: "bold",
+    fontWeight: "500",
   },
 });

@@ -5,7 +5,7 @@ export default function ProfileLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" /> {/* home/index.jsx */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name="place-order"
         options={{
           headerShown: true,
@@ -21,7 +21,7 @@ export default function ProfileLayout() {
             </TouchableOpacity>
           ),
         }}
-      />
+      /> */}
     </Stack>
   );
 }

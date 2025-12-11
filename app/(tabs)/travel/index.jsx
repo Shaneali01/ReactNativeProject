@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Fab from "../../../components/common/Fab";
 import Header from "../../../components/common/Header";
-// import SearchBar from "../../../components/common/SearchBar"; // 👈 SearchBar import removed
+// import SearchBar from "../../../components/common/SearchBar"; 
 
 const TEAL = "#008080";
 
@@ -21,7 +21,7 @@ const travels = [
         departureTime: "4:00 PM",
         arrivalTime: "8:00 PM",
         from: "DXB",
-        fromCity: "Dubai,UAE",
+        fromCity: "Dubai, UAE",
         fromFlag: "🇦🇪",
         to: "LHR",
         toCity: "Lahore, Pakistan",
@@ -49,8 +49,8 @@ const travels = [
         from: "DXB",
         fromCity: "Dubai",
         fromFlag: "🇦🇪",
-        to: "LHR",
-        toCity: "Lahore",
+        to: "KHI",
+        toCity: "Karachi", 
         toFlag: "🇵🇰",
         status: "Dispatched", // 👈 Status for Previous (Completed)
     },
@@ -92,12 +92,12 @@ const tabStatusMap = {
 export default function Travel() {
     const [activeTab, setActiveTab] = useState("Current");
 
-    // 👈 Logic to filter travels based on the active tab
+    // Logic to filter travels based on the active tab
     const filteredTravels = travels.filter((travel) =>
         tabStatusMap[activeTab].includes(travel.status)
     );
 
-    // 👈 Tab component to render the custom tab bar
+    // Tab component to render the custom tab bar
     const TabBar = () => (
         <View style={styles.tabContainer}>
             {Object.keys(tabStatusMap).map((tab) => (
@@ -133,10 +133,8 @@ export default function Travel() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 120 }}
             >
-                {/* 👈 Insert the Tab Bar here */}
+                {/* Insert the Tab Bar here */}
                 <TabBar />
-
-                {/* Search Bar was here - now removed */}
 
                 {/* Travel List - Now showing only filtered travels */}
                 {filteredTravels.length > 0 ? (
@@ -150,7 +148,7 @@ export default function Travel() {
 
                             {/* Route Container */}
                             <View style={styles.routeContainer}>
-                                {/* Departure */}
+                                {/* Departure (Left Side) */}
                                 <View style={styles.locationSection}>
                                     <Text style={styles.timeText}>
                                         {travel.departureTime}
@@ -168,7 +166,7 @@ export default function Travel() {
                                     </View>
                                 </View>
 
-                                {/* Flight Path */}
+                                {/* Flight Path (Middle) */}
                                 <View style={styles.flightPath}>
                                     <View style={styles.dashedLine}>
                                         <Text style={styles.dashes}>
@@ -186,15 +184,20 @@ export default function Travel() {
                                     </View>
                                 </View>
 
-                                {/* Arrival */}
-                                <View style={styles.locationSection}>
+                                {/* Arrival (Right Side) - Alignment Fix Applied */}
+                                <View 
+                                    style={[
+                                        styles.locationSection, 
+                                        styles.arrivalContentAlignment 
+                                    ]}
+                                >
                                     <Text style={styles.timeText}>
                                         {travel.arrivalTime}
                                     </Text>
                                     <Text style={styles.airportCode}>
                                         {travel.to}
                                     </Text>
-                                    <View style={styles.cityRow}>
+                                    <View style={styles.arrivalCityRow}> 
                                         <Text style={styles.cityText}>
                                             {travel.toCity}
                                         </Text>
@@ -228,16 +231,15 @@ const styles = StyleSheet.create({
         marginTop: -20,
     },
 
-    // 👈 Tab Bar Styles
+    // Tab Bar Styles
     tabContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "#EEEEEE", // Light gray background for the overall bar
+        backgroundColor: "#EEEEEE", 
         borderRadius: 50,
         marginHorizontal: 20,
         padding: 5,
-        marginTop: 20, // Add some top margin below the header
-        // marginBottom: 10, // Adjusted to match spacing after SearchBar removal
+        marginTop: 20, 
         marginBottom: 20,
     },
     tab: {
@@ -245,11 +247,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderRadius: 50,
         alignItems: "center",
-        // The default background is the container's background
     },
     activeTab: {
-        backgroundColor: "#fff", // White background for the active tab
-        // Shadow for the 'popped out' effect
+        backgroundColor: "#fff", 
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -262,10 +262,10 @@ const styles = StyleSheet.create({
     tabText: {
         fontSize: 12,
         fontWeight: "500",
-        color: "#6C7278", // Darker gray for inactive text
+        color: "#6C7278", 
     },
     activeTabText: {
-        color: "#000", // Black for active text
+        color: "#000", 
         fontWeight: "600",
     },
 
@@ -277,13 +277,12 @@ const styles = StyleSheet.create({
         color: "#6C7278",
     },
     
-    // Existing styles
+    // CARD STYLES
     travelCard: {
         backgroundColor: "#fff",
         marginHorizontal: 20,
         marginTop: 16,
-        padding: 11,
-        paddingRight: 1,
+        padding: 16, 
         borderRadius: 12,
         borderWidth: 1,
         borderColor: "#DCDCDC",
@@ -292,16 +291,23 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: "600",
         color: "#1A1C1E",
-        marginBottom: 6,
+        marginBottom: 8, 
     },
     routeContainer: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between", 
+        paddingHorizontal: 0, 
     },
     locationSection: {
-        // flex: 1,
+        width: '35%', 
     },
+    
+    // STYLE FOR RIGHT ALIGNMENT (Arrival)
+    arrivalContentAlignment: {
+        alignItems: 'flex-end', 
+    },
+
     timeText: {
         fontSize: 8,
         color: "#6C7278",
@@ -313,21 +319,38 @@ const styles = StyleSheet.create({
         color: "#000000",
         marginBottom: 4,
     },
+    // Departure City Row (Left side)
     cityRow: {
         flexDirection: "row",
         alignItems: "center",
         gap: 6,
     },
+    // Arrival City Row (Right side)
+    arrivalCityRow: {
+        flexDirection: "row-reverse", // Reverses order to align flag/city properly
+        alignItems: "center",
+        gap: 6,
+        justifyContent: 'flex-end', // Pushes content to the right edge
+    },
+
     cityText: {
         fontSize: 8,
         color: "#6B7280",
+        flexShrink: 1, 
     },
     flag: {
         fontSize: 11,
+        marginRight: 4,
+    },
+    flightPath: {
+        width: '30%', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -8, 
     },
     dashedLine: {
         flexDirection: "row",
-        marginHorizontal: 7,
+        alignItems: 'center',
     },
     dashes: {
         fontSize: 12,
@@ -335,6 +358,6 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
     },
     airplane: {
-        marginHorizontal: 6,
+        marginHorizontal: 4, 
     },
 });

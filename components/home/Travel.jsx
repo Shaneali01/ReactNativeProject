@@ -1,14 +1,22 @@
+// components/home/TravelContent.jsx
+
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 import {
     FlatList,
     Image,
     StyleSheet,
     Text,
-    View
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import travelData from "../../constants/TravelData.js";
 
-const TravelItem = ({ item }) => {
+// Assuming OfferModal is in the correct relative path
+import travelData from "../../constants/TravelData.js";
+import TravelDetailModal from '../travel/TravelModal.jsx';
+
+// --- TravelItem Component (Now wrapped in TouchableOpacity) ---
+const TravelItem = ({ item, onCardPress }) => { // Receives onCardPress handler
     const renderStars = (rating) => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -26,7 +34,11 @@ const TravelItem = ({ item }) => {
     };
 
     return (
-        <View style={styles.card}>
+        <TouchableOpacity 
+            style={styles.card}
+            onPress={() => onCardPress(item)} // Call handler on press
+            activeOpacity={0.8}
+        >
             <Image
                 source={{ uri: item.image }}
                 style={styles.cardImage}
@@ -72,16 +84,31 @@ const TravelItem = ({ item }) => {
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
+
+// --- TravelContent Component (Main List) ---
 const TravelContent = () => {
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedTravel, setSelectedTravel] = useState(null);
+
+    const handleCardPress = (travelItem) => {
+        setSelectedTravel(travelItem);
+        setIsModalVisible(true);
+    };
+
+    const closeModal = () => {
+        setIsModalVisible(false);
+        setSelectedTravel(null);
+    };
+
     return (
         <View style={styles.contentContainer}>
             <FlatList
                 data={travelData}
-                renderItem={({ item }) => <TravelItem item={item} />}
+                renderItem={({ item }) => <TravelItem item={item} onCardPress={handleCardPress} />}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.listContent}
                 showsVerticalScrollIndicator={false}
@@ -91,6 +118,13 @@ const TravelContent = () => {
                         <Text style={styles.emptyListText}>No travel requests found.</Text>
                     </View>
                 )}
+            />
+            
+            {/* Render the Modal, passing the selected item */}
+            <TravelDetailModal
+                visible={isModalVisible}
+                onClose={closeModal}
+                travel={selectedTravel} // **FIXED: Prop name changed from 'order' to 'travel'**
             />
         </View>
     );
@@ -104,7 +138,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     listContent: {
-        paddingBottom: 100, // Make sure the FAB doesn't hide the last item
+        paddingBottom: 100,
     },
     card: {
         flexDirection: 'row',
@@ -121,9 +155,9 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     cardImage: {
-        width: 80, // Smaller image for travel profile
+        width: 80, 
         height: 80,
-        borderRadius: 10, // Make it circular
+        borderRadius: 10,
         marginRight: 12,
         backgroundColor: '#F0F0F0',
         resizeMode: 'cover',
@@ -169,7 +203,6 @@ const styles = StyleSheet.create({
     },
     timeLocation: {
         alignItems: 'flex-start',
-        // flex: 1,
     },
     timeText: {
         fontSize: 10,
@@ -208,7 +241,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: '#008080',
         letterSpacing: 0,
-        marginHorizontal: 1, // Reduced margin
+        marginHorizontal: 1,
         fontWeight: '600',
     },
     emptyList: {

@@ -19,6 +19,8 @@ const TEAL = "#008080";
 export default function OrderSummary() {
   const [paymentAdded, setPaymentAdded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const AirplaneRouteImage = require("../../../assets/images/airplanedashes.png"); 
+
 
   const handleAddPayment = () => {
     router.push("/(tabs)/home/PaymentDetails");
@@ -34,29 +36,50 @@ export default function OrderSummary() {
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Product Card */}
-        <View style={styles.productCard}>
-          <Image
-            source={{ uri: "https://via.placeholder.com/80" }}
-            style={styles.productImage}
-          />
-          <View style={styles.productInfo}>
-            <Text style={styles.productName}>iPhone 15 Pro Max</Text>
-            <Text style={styles.productDate}>Date: 4 July 2025</Text>
-            <View style={styles.routeContainer}>
-              <View style={styles.flagBox}>
-                <Text style={styles.flagText}>USA</Text>
-              </View>
-              <View style={styles.dottedLine} />
-              <View style={styles.flagBox}>
-                <Text style={[styles.flagText, { backgroundColor: TEAL }]}>
-                  Pakistan
-                </Text>
-              </View>
-            </View>
-            <Text style={styles.quantity}>Quantity: 1</Text>
+        <View style={styles.card}>
+        <Image source={{ uri: "https://images.unsplash.com/photo-1592286927505-b0e2967ddc93?w=200" }} style={styles.cardImage} />
+        <View style={styles.cardDetails}>
+          <View style={styles.titleRow}>
+            <Text style={styles.cardTitle} numberOfLines={1}>
+              iphone 15 pro Max
+            </Text>
+            <Text style={styles.cardPrice}>$100</Text>
           </View>
-          <Text style={styles.productPrice}>$100</Text>
+          <View style={styles.new}>
+            <Text style={styles.category}>
+              {" "}
+              Electronics{" "}
+            </Text>
+            <Text style={ styles.reward}>
+              {" "}
+              Reward: $100{" "}
+            </Text>
+          </View>
+          <View style={styles.new}>
+            <Text style={styles.cardDate}>Date: 24 July 2025</Text>
+            <Text style={styles.quantity}>Quantity: 2</Text>
+          </View>
+
+          <View style={styles.bottomRow}>
+            <View style={styles.travelRoute}>
+              {/* From City */}
+              <Text style={styles.routeText}>Lahore</Text>
+              <Text style={styles.flag}>flag</Text>
+
+              {/* Airplane Image */}
+              <Image
+                source={AirplaneRouteImage}
+                style={styles.airplaneIcon} 
+                resizeMode="contain"
+              />
+
+              {/* To City */}
+              <Text style={styles.flag}>America</Text>
+              <Text style={styles.routeText}>flag</Text>
+            </View>
+          </View>
         </View>
+      </View>
 
         {/* Price Summary */}
         <Text style={styles.sectionTitle}>Price Summary</Text>
@@ -121,50 +144,124 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     marginTop: -20,
   },
-  productCard: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 16,
-    marginTop: 20,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-    alignItems: "center",
-  },
-  productImage: { width: 80, height: 80, borderRadius: 12, marginRight: 14 },
-  productInfo: { flex: 1 },
-  productName: { fontSize: 15, fontWeight: "bold", color: "#333" },
-  productDate: { fontSize: 11, color: "#999", marginTop: 2 },
-  routeContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 8,
-  },
-  flagBox: {
-    backgroundColor: "#333",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 6,
-  },
-  flagText: { color: "#fff", fontSize: 10, fontWeight: "600" },
-  dottedLine: {
-    flex: 1,
-    height: 1,
-    borderTopWidth: 2,
-    borderTopColor: "#ccc",
-    borderStyle: "dotted",
-    marginHorizontal: 10,
-  },
-  quantity: { fontSize: 12, color: "#666" },
-  productPrice: { fontSize: 18, fontWeight: "bold", color: TEAL },
+   card: {
+    flexDirection: "row",
+    backgroundColor: "#FFFF",
+    borderRadius: 12,
+    padding: 12,
+paddingBottom:2,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#E5E5E5",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+marginTop: 20
+  },
+  cardImage: {
+    width: 78,
+    height: 90,
+    borderRadius: 8,
+    marginRight: 12,
+    backgroundColor: "#F0F0F0",
+    resizeMode: "cover",
+  },
+  cardDetails: {
+    flex: 1,
+  },
+  titleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 4,
+  },
+  cardTitle: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#1A1C1E",
+    flex: 1,
+  },
+  cardPrice: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#1A1C1E",
+    marginLeft: 8,
+  },
+  cardDate: {
+    fontSize: 8,
+    color: "#6C7278",
+    marginBottom: 0,
+    fontWeight: "400",
+  },
+  category: {
+    fontSize: 8,
+    backgroundColor: "#EEEEEE",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 100,
+    color: "#1E1E1E",
+  },
+new: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+marginTop:4
+  },
+  reward: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#08843C",
+    lineHeight: 14,
+  },
+  bottomRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+marginBottom: 4
+  },
+  travelRoute: {
+    flexDirection: "row",
+    alignItems: "center",
+marginLeft:14
+  },
+  routeText: {
+    fontSize: 10,
+    color: "#000",
+    fontWeight: "500",
+marginTop:-5,
+  },
+  flag: {
+    fontSize: 9,
+    marginHorizontal: 4,
+marginTop:-5
+  },
+  quantity: {
+    fontSize: 8,
+    color: "#6B7280",
+    fontWeight: "400",
+  },
+  emptyList: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
+    padding: 20,
+  },
+  emptyListText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#999",
+  },
+  airplaneIcon: {
+    width: 90,
+    height: 40,
+    marginHorizontal: 4,
+marginTop:-5
+  },
   sectionTitle: {
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "500",
     color: "#1E1E1E",
     textTransform: "uppercase",
@@ -175,8 +272,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 8,
   },
-  priceLabel: { fontSize: 14, color: "#6C7278" },
-  priceValue: { fontSize: 13, fontWeight: "600", color: "#333" },
+  priceLabel: { fontSize: 12, color: "#6C7278" },
+  priceValue: { fontSize: 11, fontWeight: "600", color: "#333" },
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -185,8 +282,8 @@ const styles = StyleSheet.create({
     borderTopColor: "#eee",
     marginTop: 10,
   },
-  totalLabel: { fontSize: 15, fontWeight: "bold", color: "#333" },
-  totalAmount: { fontSize: 18, fontWeight: "bold", color: TEAL },
+  totalLabel: { fontSize: 13, fontWeight: "bold", color: "#333" },
+  totalAmount: { fontSize: 16, fontWeight: "bold", color: TEAL },
 
   // Custom button style matching the UI image (white, shadow, rounded)
   paymentButtonUi: {
@@ -204,7 +301,7 @@ const styles = StyleSheet.create({
 
   // Style for the 'Add Payment Method' text
   paymentLabelBig: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
     fontFamily: "Inter",
     color: "#2C2C2E",
@@ -213,7 +310,7 @@ const styles = StyleSheet.create({
 
   // Style for the '>' chevron
   chevronButton: {
-    fontSize: 12,
+    fontSize: 10,
     marginLeft: 14,
     color: "#6C7278",
     fontWeight: "200",
@@ -233,5 +330,5 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
   },
-  requestButtonText: { color: "#fff", fontSize: 14, fontWeight: "bold",fontStyle:"medium",lineHeight:'140%' },
+  requestButtonText: { color: "#fff", fontSize: 12, fontWeight: "bold",fontStyle:"medium",lineHeight:'140%' },
 });

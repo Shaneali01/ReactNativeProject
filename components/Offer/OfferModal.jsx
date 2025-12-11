@@ -118,7 +118,7 @@ const OfferModal = ({ visible, onClose, order }) => {
                             <Text style={styles.profileEmail}>{order.buyerEmail}</Text>
                         </View>
                         <TouchableOpacity style={styles.chatButton}>
-                            <Ionicons name="chatbox-ellipses-outline" size={24} color="#008080" />
+                            <Ionicons name="chatbox-ellipses-outline" size={20} color="#008080" />
                         </TouchableOpacity>
                     </View>
                     
@@ -141,10 +141,10 @@ const OfferModal = ({ visible, onClose, order }) => {
 
                 {/* Action Buttons (FIXED at the bottom) */}
                 <View style={styles.buttonRow}>
-                    <TouchableOpacity style={styles.offerButton} onPress={() => { /* Handle Make an Offer */ }}>
+                    <TouchableOpacity style={styles.offerButton} onPress={() => { router.push("/(tabs)/home/Offer") }}>
                         <Text style={styles.offerButtonText}>Make an Offer</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.viewDetailsButton} onPress={() =>router.push("/(tabs)/home/MakeOffer")}>
+                    <TouchableOpacity style={styles.viewDetailsButton} onPress={() =>router.push("/(tabs)/home/ViewDetails")}>
                         <Text style={styles.viewDetailsButtonText}>View Details</Text>
                     </TouchableOpacity>
                 </View>
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     productTitle: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
         color: '#1A1C1E',
         flexShrink: 1,
@@ -211,12 +211,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     productPrice: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
         color: '#1A1C1E',
     },
     productReward: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '600',
         color: '#08843C',
         marginTop: 5,
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     websiteLinkText: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: '600',
         color: TEAL,
         marginLeft: 8,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     },
     routeDate: {
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: 10,
         color: '#666',
     },
     routeDetails: {
@@ -259,13 +259,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cityCode: {
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: '600',
         color: '#333',
         marginBottom: 0, 
     },
     cityText: {
-        fontSize: 9,
+        fontSize: 7,
         color: '#666',
         textAlign: 'center',
         marginBottom:2
@@ -318,12 +318,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     profileName: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '600',
         color: '#333',
     },
     profileEmail: {
-        fontSize: 12,
+        fontSize: 10,
         color: '#6C7278',
     },
     chatButton: {
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     offerButton: {
         flex: 2, 
         backgroundColor: TEAL,
-        paddingVertical: 15, 
+        paddingVertical: 10, 
         borderRadius: 30,
         alignItems: "center",
         paddingHorizontal: 10,
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     },
     offerButtonText: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: "500", 
     },
     viewDetailsButton: {
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     },
     viewDetailsButtonText: {
         color: TEAL,
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: "500", 
 
     },

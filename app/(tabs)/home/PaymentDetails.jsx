@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     color: TEAL,
-    fontSize: 13,
+    fontSize: 11,
     textAlign: "center",
     fontWeight: "400",
     lineHeight: 20,
@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   detailTitle: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#6C7278",
   },
   detailValue: {
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: "400",
     color: "#2C2C2E",
     marginTop: 2,
@@ -203,13 +203,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8fffe",
   },
   uploadText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "400",
     color: "#666",
     marginTop: 8,
   },
   uploadHint: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#aaa",
     marginTop: 4,
   },
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   uploadedText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
     color: TEAL,
     marginTop: 8,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 30,
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 40,
   },
   submitButtonDisabled: {
     // Since screenshotUri is true, this style is currently ignored.
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
     fontStyle:"medium"
   },
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   },
   verificationText: {
     color: "#cc8800", // Darker orange/yellow text
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: "600",
   },
 });

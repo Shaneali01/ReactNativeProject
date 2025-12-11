@@ -18,7 +18,7 @@ export default function PaymentSuccess() {
       <View style={styles.content}>
         {/* Success Icon */}
         <View style={styles.iconContainer}>
-          <Ionicons name="checkmark" size={80} color="#00BA00" />
+          <Ionicons name="checkmark" size={75} color="#00BA00" />
         </View>
 
         {/* Success Message */}
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: '#E0F5E8',
     borderRadius: 75,
-    width: 150,
-    height: 150,
+    width: 140,
+    height: 140,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 40,
@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
    
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#00BA00",
     marginBottom: 10,
     textAlign: "center",
   },
   message: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#696969",
     textAlign: "center",
     paddingHorizontal: 2,
@@ -85,14 +85,14 @@ const styles = StyleSheet.create({
   },
   homeButton: {
     backgroundColor: TEAL,
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 30,
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 40,
   },
   homeButtonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
     fontStyle:"inter",
     lineHeight: '140%',

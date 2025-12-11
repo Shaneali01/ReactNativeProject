@@ -2,24 +2,23 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Image,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import AirplaneRouteImage from "../../../assets/images/airplanedashes.png";
 import Header from "../../../components/common/Header";
 
 const TEAL = "#008080";
 
 export default function ChatScreen() {
-  const { name = "Ibrar Naveed" } = useLocalSearchParams();
+  const { name = "Ali raza" } = useLocalSearchParams();
   const [message, setMessage] = useState("");
   const scrollViewRef = useRef(null);
 
@@ -41,7 +40,7 @@ export default function ChatScreen() {
   return (
     <>
       {/* Teal Header */}
-      <Header title="Ibrar Naveed" />
+      <Header title="Ali raza" />
       
       {/* Rounded White Container */}
       <KeyboardAvoidingView
@@ -51,37 +50,46 @@ export default function ChatScreen() {
       >
         <View style={styles.container}>
           {/* Product Card at Top */}
-          <View style={styles.productCardWrapper}>
-            <View style={styles.productCard}>
-              <Image
-                source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbbPE8c7mhKZPFQMciGp1GumwMBv_Knv86Ug&s" }}
-                style={styles.productImage}
-              />
-              <View style={{ flex: 1, marginLeft: 12 }}>
-                <View style={styles.new}>
-                    <Text style={styles.productTitle}>iPhone 15 Pro Max</Text>
-                  <Text style={styles.price}>$139.59</Text>
-
-                </View>
-              
-                <View style={styles.routeRow}>
-                  <Text style={styles.airport}>DXB</Text>
-                <Image
-                      source={AirplaneRouteImage}
-                      style={styles.airplaneIcon} // Using new style for size
-                      resizeMode="contain"
-                    />
-                  <Text style={styles.airport}>LHR</Text>
-                </View>
-                <View style={styles.new}>
-                      <Text style={styles.citySmall}>Dubai 🇦🇪</Text>
-                      <Text style={styles.citySmall}>Lahore 🇵🇰</Text>
-
-                </View>
-              </View>
-            </View>
-          </View>
-
+          <View style={styles.offerCard}>
+                     {/* Product Title + Date */}
+                     <View style={styles.offerHeader}>
+                       <Text style={styles.productName}>iPhone 15 Pro Max Black</Text>
+                       <Text style={styles.date}>24 july 2025</Text>
+                     </View>
+         
+                     {/* Buyer Info */}
+                     <View style={styles.buyerRow}>
+                       <Image
+                         source={{
+                           uri: "https://randomuser.me/api/portraits/men/45.jpg",
+                         }}
+                         style={styles.buyerAvatar}
+                       />
+                       <View style={{ flex: 1 }}>
+                         <Text style={styles.buyerName}>Ali raza</Text>
+                         <View style={styles.ratingRow}>
+                           <Ionicons name="star" size={14} color="#FF9500" />
+                           <Ionicons name="star" size={14} color="#FF9500" />
+                           <Ionicons name="star" size={14} color="#FF9500" />
+         
+                           <Text style={styles.ratingText}>4.8</Text>
+                         </View>
+                       </View>
+                       <TouchableOpacity onPress={()=>router.push("/(tabs)/home/OfferChat")} style={styles.chatButton}>
+                         <Ionicons name="chatbox-ellipses-outline" size={20} color="" />
+                       </TouchableOpacity>
+                     </View>
+         
+                     {/* Action Buttons */}
+                     <View style={styles.actionButtons}>
+                       <TouchableOpacity style={styles.rejectButton}>
+                         <Text style={styles.rejectText}>Reject</Text>
+                       </TouchableOpacity>
+                       <TouchableOpacity style={styles.acceptButton}>
+                         <Text style={styles.acceptText}>Accept</Text>
+                       </TouchableOpacity>
+                     </View>
+                   </View>
           {/* Messages */}
           <ScrollView
             ref={scrollViewRef}
@@ -160,61 +168,104 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  productCardWrapper: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 12,
-  },
-  productCard: {
+  offerCard: {
     backgroundColor: "#fff",
+    marginHorizontal: 20,
+    marginTop: 16,
+    padding: 16,
     borderRadius: 16,
-    padding: 14,
-    flexDirection: "row",
-    alignItems: "center",
     borderWidth: 1,
     borderColor: "#DCDCDC",
-   
   },
-  productImage: { 
-    width: 78, 
-    height: 80, 
-    borderRadius: 8 
+  chatButton: {
+        padding: 10,
+        backgroundColor: '#D8EBEB',
+        borderRadius: 20,
+    },
+  offerHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 12,
   },
-  productTitle: { 
-    fontSize: 12, 
-    fontWeight: "bold", 
-    color: "#1A1C1E" 
-  },
-  routeRow: { 
-    flexDirection: "row", 
-    alignItems: "center", 
-    marginTop: 6 
-  },
-  airport: { 
-    fontSize: 11, 
-    fontWeight: "bold", 
-    color: "#333" 
-  },
-  citySmall: { 
-    fontSize: 8, 
-    color: "#000000", 
-    marginLeft: 4 
-  },
-  dottedLine: {
+  productName: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#222",
     flex: 1,
-    height: 1,
-    borderTopWidth: 1,
-    borderColor: "#ccc",
-    borderStyle: "dashed",
-    marginHorizontal: 6,
   },
-  price: { 
-    fontSize: 12, 
-    fontWeight: "bold", 
-    color: '#1A1C1E', 
-    marginLeft: 12 
+  date: {
+    fontSize: 8,
+    color: "#888",
   },
 
+  buyerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  buyerAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    marginRight: 12,
+  },
+  buyerName: {
+    fontSize: 10,
+    fontWeight: "600",
+    color: "#333",
+  },
+  ratingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 4,
+  },
+  ratingText: {
+    fontSize: 10,
+    color: "#555",
+    marginLeft: 4,
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#aaa",
+    marginHorizontal: 10,
+  },
+  verifiedText: {
+    fontSize: 12.5,
+    color: TEAL,
+    fontWeight: "600",
+  },
+
+  actionButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  rejectButton: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 100,
+    backgroundColor: "#ffe6e6",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  rejectText: {
+    color: "#e74c3c",
+    fontWeight: "400",
+    fontSize: 12,
+  },
+  acceptButton: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 100,
+    backgroundColor: TEAL,
+    alignItems: "center",
+  },
+  acceptText: {
+    color: "#fff",
+    fontWeight: "400",
+    fontSize: 12,
+  },
   messageWrapper: { 
     marginTop: 12,
     marginVertical: 4, 

@@ -1,5 +1,6 @@
 // app/(tabs)/inbox/Offer.jsx
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -55,7 +56,7 @@ export default function Offer() {
   return (
     <>
       {/* Teal Header */}
-   <Header title="Offers" />
+      <Header title="Offers" />
 
       {/* Main White Rounded Container */}
       <ScrollView
@@ -64,7 +65,7 @@ export default function Offer() {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Search Bar */}
-       <SearchBar/>
+        <SearchBar />
 
         {/* Tabs */}
         <View style={styles.tabContainer}>
@@ -108,20 +109,24 @@ export default function Offer() {
             {/* Buyer Info */}
             <View style={styles.buyerRow}>
               <Image
-                source={{ uri: "https://randomuser.me/api/portraits/men/45.jpg" }}
+                source={{
+                  uri: "https://randomuser.me/api/portraits/men/45.jpg",
+                }}
                 style={styles.buyerAvatar}
               />
               <View style={{ flex: 1 }}>
                 <Text style={styles.buyerName}>{offer.buyerName}</Text>
                 <View style={styles.ratingRow}>
-                  <Ionicons name="star" size={14} color="#FFD700" />
-                                    <Ionicons name="star" size={14} color="#FFD700" />
-                  <Ionicons name="star" size={14} color="#FFD700" />
+                  <Ionicons name="star" size={14} color="#FF9500" />
+                  <Ionicons name="star" size={14} color="#FF9500" />
+                  <Ionicons name="star" size={14} color="#FF9500" />
 
                   <Text style={styles.ratingText}>{offer.buyerRating}</Text>
                 </View>
               </View>
-              <Ionicons name="chatbubble-outline" size={22} color={TEAL} />
+              <TouchableOpacity onPress={()=>router.push("/(tabs)/home/OfferChat")} style={styles.chatButton}>
+                <Ionicons name="chatbox-ellipses-outline" size={20} color="" />
+              </TouchableOpacity>
             </View>
 
             {/* Action Buttons */}
@@ -191,7 +196,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 8,
     alignItems: "center",
     borderRadius: 100,
   },
@@ -226,6 +231,11 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
+  chatButton: {
+        padding: 10,
+        backgroundColor: '#D8EBEB',
+        borderRadius: 20,
+    },
   offerHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -254,7 +264,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   buyerName: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "600",
     color: "#333",
   },
@@ -295,7 +305,7 @@ const styles = StyleSheet.create({
   },
   rejectText: {
     color: "#e74c3c",
-    fontWeight: "600",
+    fontWeight: "400",
     fontSize: 12,
   },
   acceptButton: {
@@ -307,7 +317,7 @@ const styles = StyleSheet.create({
   },
   acceptText: {
     color: "#fff",
-    fontWeight: "600",
+    fontWeight: "400",
     fontSize: 12,
   },
 });

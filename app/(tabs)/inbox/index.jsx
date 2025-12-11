@@ -55,7 +55,7 @@ export default function Inbox() {
             />
             <View style={styles.chatInfo}>
               <Text style={styles.name}>{chat.name}</Text>
-              <Text style={styles.message} numberOfLines={1}>
+              <Text style={styles.message} numberOfLines={2}>
                 {chat.message}
               </Text>
             </View>
@@ -63,7 +63,6 @@ export default function Inbox() {
               <Text style={styles.time}>{chat.time}</Text>
               {chat.unread > 0 && (
                 <View style={styles.unreadBadge}>
-                  <Text style={styles.unreadText}>{chat.unread}</Text>
                 </View>
               )}
             </View>
@@ -124,12 +123,12 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingLeft:2,
     marginHorizontal: 20,
-    marginTop: 12,
+    marginTop: 2,
     backgroundColor: "#fff",
     borderRadius: 16,
     alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: "#f5f5f5",
+    borderBottomColor: "#DCDCDC",
   },
   avatar: {
     width: 50,
@@ -138,14 +137,14 @@ const styles = StyleSheet.create({
     marginRight: 14,
   },
   chatInfo: { flex: 1 },
-  name: { fontSize: 14.5, fontWeight: "600", color: "#222" },
-  message: { fontSize: 12.5, color: "#666", marginTop: 4 },
+  name: { fontSize: 12, fontWeight: "600", color: "#000000" },
+  message: { fontSize: 10, marginHorizontal: 2, color: "#666", marginTop: 6,lineHeight:14 },
   right: { alignItems: "flex-end", justifyContent: "center" },
-  time: { fontSize: 11, color: "#999" },
+  time: { fontSize: 10, color: "#008080" },
   unreadBadge: {
     backgroundColor: TEAL,
-    minWidth: 22,
-    height: 22,
+    minWidth: 8,
+    height: 8,
     borderRadius: 11,
     justifyContent: "center",
     alignItems: "center",

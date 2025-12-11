@@ -81,6 +81,14 @@ const OrderCard = ({ order, statusStyle }) => (
         </Text>
         <Text style={styles.price}>{order.price}</Text>
       </View>
+      {/* categories section added */}
+       <View style={styles.topRow}>
+        <Text style={styles.category} numberOfLines={1}>
+          Electronics
+        </Text>
+        <Text style={styles.reward}>{order.price}</Text>
+      </View>
+      
 
       <View style={styles.routeRow}>
         {/* START Location (From) */}
@@ -184,7 +192,7 @@ const styles = StyleSheet.create({
     // The previous 80px padding is now handled mostly by the parent's structure 
     // and the ListHeaderComponent. We use a smaller padding for visual space.
     paddingTop: 0, 
-    paddingHorizontal: 16, 
+    paddingHorizontal: 20, 
     paddingBottom: 100, 
   },
   orderCard: {
@@ -194,17 +202,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#E5E5E5",
-
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    borderColor: "#DCDCDC",
   },
   productImage: {
     width: 80,
     height: 90,
+    marginTop: 20,
     borderRadius: 8,
     marginRight: 12,
     backgroundColor: "#f0f0f0",
@@ -220,16 +223,30 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   productName: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "600",
     color: "#1F2937",
     flex: 1,
   },
   price: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "800",
     color: "#1F2937",
     marginLeft: 8,
+  },
+  category:{
+    fontSize: 8,
+    backgroundColor: "#EEEEEE",
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    borderRadius: 100,
+    color: "#1E1E1E",
+  },
+  reward:{
+    fontSize: 10,
+    fontWeight: "500",
+    color: "#08843C",
+    lineHeight: 14,
   },
   sectionHeader: {
     flexDirection: "row",
@@ -239,7 +256,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: "#000",
   },
@@ -250,7 +267,7 @@ const styles = StyleSheet.create({
   },
   editText: {
     color: '#6C7278',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "600",
     marginLeft: 4,
   },
@@ -264,7 +281,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   airportCode: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "800",
     color: "#1F2937",
     marginBottom: 2,
@@ -275,11 +292,11 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   cityText: {
-    fontSize: 10,
+    fontSize: 8,
     color: GRAY_TEXT,
   },
   flag: {
-    fontSize: 12,
+    fontSize: 10,
   },
   routeVisual: {
     flexDirection: "row",
@@ -309,7 +326,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   sellerName: {
-    fontSize: 12,
+    fontSize: 10,
     color: GRAY_TEXT,
     fontWeight: '500',
   },
@@ -321,7 +338,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statusText: {
-    fontSize: 11,
+    fontSize: 9,
     fontWeight: "700",
   },
 });

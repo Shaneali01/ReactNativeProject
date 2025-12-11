@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     airportCode: {
-        fontSize: 10,
+        fontSize: 16,
         fontWeight: "700",
         color: "#1F2937",
     },
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     sellerName: {
-        fontSize: 12,
+        fontSize: 10,
         color: "#6B7280",
     },
     statusBadge: {
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     statusText: {
-        fontSize: 11,
+        fontSize: 9,
         fontWeight: "600",
     },
 

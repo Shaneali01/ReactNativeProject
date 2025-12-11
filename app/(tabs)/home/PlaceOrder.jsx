@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 14,
     marginBottom: 5,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "500",
     color: "#1E1E1E",
     textTransform: "uppercase",
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 8,
     backgroundColor: "#fff",
   },
   smallInputText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: 10,
     color: "#333",
   },
   smallInputMultiline: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     minHeight: 70,
   },
   smallInputTextMultiline: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#333",
     flex: 1,
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   // Upload Box - slightly smaller & modern
   uploadBox: {
     marginTop: 10,
-    height: 100,
+    height: 140,
     borderWidth: 1.5,
     borderColor: "#ddd",
     borderStyle: "dashed",
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   uploadIcon: { marginBottom: 6, position: "relative" },
-  uploadText: { fontSize: 11, color: "#999", textAlign: "center" },
+  uploadText: { fontSize: 9, color: "#999", textAlign: "center" },
   uploadedImage: { width: "100%", height: "100%", borderRadius: 8 },
 
   // Smaller Next Button (same as PlaceOrder2)
@@ -211,11 +211,11 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     borderRadius: 24,
     alignItems: "center",
-    marginBottom: 12
+    marginBottom: 10
   },
   nextButtonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
   },
 });

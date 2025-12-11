@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 14,
     marginBottom: 5,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "500",
     color: "#1E1E1E",
     textTransform: "uppercase",
@@ -162,12 +162,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    paddingHorizontal: 27,
+    paddingHorizontal: 25,
     paddingVertical: 14,
     backgroundColor: "#fff",
   },
-  smallText: { fontSize: 12, color: "#666" },
-  placeholderText: { fontSize: 12, color: "#aaa" },
+  smallText: { fontSize: 10, color: "#666" },
+  placeholderText: { fontSize: 10, color: "#aaa" },
 
   priceContainer: {
     flexDirection: "row",

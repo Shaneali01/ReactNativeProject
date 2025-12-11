@@ -14,6 +14,7 @@ import {
 } from "react-native";
 
 const TEAL = "#008080";
+const black="#1E1E1E"
 const { width } = Dimensions.get("window");
 
 export default function ViewDetails() {
@@ -81,42 +82,44 @@ export default function ViewDetails() {
             {/* Content Card */}
             <View style={styles.contentCard}>
                 <ScrollView showsVerticalScrollIndicator={false}>
+                     <View style={styles.productHeader}>
+                        <Text style={styles.productName}>iPhone 15 Pro Max</Text>
+                        <Text style={styles.productPrice}>$139.59</Text>
+                    </View>
+
                     {/* Website Link Button */}
                     <TouchableOpacity style={styles.websiteButton} onPress={openWebsite}>
                         <Ionicons name="link-outline" size={18} color={TEAL} />
                         <Text style={styles.websiteButtonText}>Website Link</Text>
                     </TouchableOpacity>
 
-                    {/* Product Name and Price */}
-                    <View style={styles.productHeader}>
-                        <Text style={styles.productName}>iPhone 15 Pro Max</Text>
-                        <Text style={styles.productPrice}>$139.59</Text>
-                    </View>
-
-                    {/* Date */}
-                    <Text style={styles.dateText}>24 July 2025</Text>
-
-                    {/* Route Information */}
-                    <View style={styles.routeContainer}>
-                        <View style={styles.locationBox}>
-                            <Text style={styles.airportCode}>DXB</Text>
-                            <View style={styles.countryRow}>
-                                <Text style={styles.countryText}>United Arab Emirates</Text>
-                                <Text style={styles.flagEmoji}>🇦🇪</Text>
+                    {/* Travel Route Section - NOW MATCHES OfferModal EXACTLY */}
+                    <View style={styles.routeSection}>
+                        <Text style={styles.routeDate}>24 July 2025</Text>
+                        <View style={styles.routeDetails}>
+                            {/* Origin */}
+                            <View style={styles.cityColumn}>
+                                <Text style={styles.cityCode}>DXB</Text>
+                                <Text style={styles.cityText}>
+                                    United Arab Emirates
+                                    <Text style={styles.flag}> 🇦🇪</Text>
+                                </Text>
                             </View>
-                        </View>
 
-                        <View style={styles.arrowContainer}>
-                            <View style={styles.dottedLine} />
-                            <Ionicons name="airplane" size={20} color="#999" />
-                            <View style={styles.dottedLine} />
-                        </View>
+                            {/* Dashed Line + Airplane */}
+                            <View style={styles.routeConnector}>
+                                <View style={styles.dashedLine} />
+                                <Ionicons name="airplane" size={18} color={TEAL} style={styles.airplaneIcon} />
+                                <View style={styles.dashedLine} />
+                            </View>
 
-                        <View style={styles.locationBox}>
-                            <Text style={styles.airportCode}>LHR</Text>
-                            <View style={styles.countryRow}>
-                                <Text style={styles.countryText}>Pakistan</Text>
-                                <Text style={styles.flagEmoji}>🇵🇰</Text>
+                            {/* Destination */}
+                            <View style={styles.cityColumn}>
+                                <Text style={styles.cityCode}>LHR</Text>
+                                <Text style={styles.cityText}>
+                                    Pakistan
+                                    <Text style={styles.flag}> 🇵🇰</Text>
+                                </Text>
                             </View>
                         </View>
                     </View>
@@ -130,18 +133,20 @@ export default function ViewDetails() {
                         <View style={styles.travelerInfo}>
                             <View style={styles.travelerNameRow}>
                                 <Text style={styles.travelerName}>Ali Raza</Text>
-                                <View style={styles.verifiedBadge}>
-                                    <Text style={styles.verifiedText}>Passport Verified</Text>
-                                </View>
                             </View>
                             <Text style={styles.travelerEmail}>ibrarnaveed@gmail.com</Text>
                         </View>
                         <TouchableOpacity style={styles.chatButton}>
-                            <Ionicons name="chatbubble-ellipses" size={22} color="#fff" />
-                        </TouchableOpacity>
+                                                   <Ionicons name="chatbox-ellipses-outline" size={20} color="" />
+                                               </TouchableOpacity>
                     </View>
-
+                     <View style={styles.infoContainer}>
+                        <View style={styles.infoRow}>
+                        <Text style={styles.infoLabel}>Reward:</Text>
+                        <Text style={styles.infoValue}>$550</Text>
+                    </View>
                     {/* Quantity */}
+                   
                     <View style={styles.infoRow}>
                         <Text style={styles.infoLabel}>Quantity:</Text>
                         <Text style={styles.infoValue}>1</Text>
@@ -152,6 +157,9 @@ export default function ViewDetails() {
                         <Text style={styles.infoLabel}>Category:</Text>
                         <Text style={styles.infoValue}>Electronics</Text>
                     </View>
+                        
+                    </View>
+                     
 
                     {/* Description */}
                     <View style={styles.descriptionContainer}>
@@ -180,17 +188,14 @@ export default function ViewDetails() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff", // Change background to white for cleaner look under the card
+        backgroundColor: "#fff",
     },
     header: {
-        // --- FIX APPLIED HERE ---
-        position: 'absolute', // Float the header over the content
+        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 10, // Ensure it's clickable and visible above the image
-        // -------------------------
-
+        zIndex: 10,
         paddingTop: 50,
         paddingHorizontal: 20,
         paddingBottom: 10,
@@ -204,14 +209,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     imageCarouselContainer: {
-        // --- FIX APPLIED HERE (Reverted to original fixed height) ---
-        height: 300, // Increased height slightly (from 150 to 300) to give the image more space
-        // You can change 300 back to 150 if you want a very short image section.
+        height: 280,
         position: "relative",
     },
     carouselImage: {
         width: width,
-        height: '100%', // <--- Crucial: Make the image fill the carousel container's height
+        height: '100%',
     },
     paginationContainer: {
         position: "absolute",
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
         paddingTop: 20,
-        marginTop: -30, // Increased negative margin to overlap the image slightly more
+        marginTop: -20,
     },
     websiteButton: {
         flexDirection: "row",
@@ -251,6 +254,11 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         marginBottom: 20,
         gap: 8,
+    },
+    chatButton: {
+        padding: 10,
+        backgroundColor: '#D8EBEB',
+        borderRadius: 20,
     },
     websiteButtonText: {
         color: TEAL,
@@ -274,65 +282,72 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#333",
     },
-    dateText: {
-        fontSize: 11,
-        color: "#999",
-        marginBottom: 8,
-        textAlign: "center",
+
+    // --- NEW ROUTE STYLES (copied exactly from OfferModal) ---
+    routeSection: {
+        paddingVertical: 2,
+        marginTop: 2,
+        marginBottom: 10,
     },
-    routeContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: "#fff",
-        padding: 8,
-        borderRadius: 10,
-        marginBottom: 5,
-        borderWidth: 1,
-        borderColor: "#f0f0f0",
+    routeDate: {
+        textAlign: 'center',
+        fontSize: 10,
+        color: '#666',
+        marginBottom: 0,
     },
-    locationBox: {
+    routeDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cityColumn: {
+        alignItems: 'center',
         flex: 1,
     },
-    airportCode: {
-        fontSize: 10,
-        fontWeight: "bold",
-        color: "#333",
-        marginBottom: 3,
+    cityCode: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 0,
     },
-    countryRow: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 4,
+    cityText: {
+        fontSize: 7,
+        color: '#666',
+        textAlign: 'center',
+        marginBottom: 2,
     },
-    countryText: {
-        fontSize: 10,
-        color: "#666",
+    flag: {
+        fontSize: 8,
+    },
+    routeConnector: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 2,
+        marginHorizontal: 5,
+    },
+    dashedLine: {
         flex: 1,
-    },
-    flagEmoji: {
-        fontSize: 14,
-    },
-    arrowContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 8,
-    },
-    dottedLine: {
-        width: 30,
         height: 1,
-        borderTopWidth: 2,
-        borderTopColor: "#ccc",
-        borderStyle: "dotted",
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'dashed',
+        marginBottom: 10,
     },
+    airplaneIcon: {
+        marginHorizontal: 5,
+        marginBottom: 10,
+    },
+    // --- END OF ROUTE STYLES ---
+
     travelerCard: {
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#fff",
         padding: 12,
-        borderRadius: 12,
         marginBottom: 8,
-        borderWidth: 1,
-        borderColor: "#f0f0f0",
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: "#D9D9D9",
     },
     travelerImage: {
         width: 50,
@@ -351,9 +366,9 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
     },
     travelerName: {
-        fontSize: 12,
-        fontWeight: "bold",
-        color: "#333",
+        fontSize: 16,
+        fontWeight: "semibold",
+        color: "#1A1C1E",
     },
     verifiedBadge: {
         backgroundColor: "#C8E6C9",
@@ -368,28 +383,25 @@ const styles = StyleSheet.create({
     },
     travelerEmail: {
         fontSize: 10,
-        color: "#666",
+        color: "#1A1C1E",
     },
-    chatButton: {
-        backgroundColor: TEAL,
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        justifyContent: "center",
-        alignItems: "center",
+    infoContainer:{
+        padding:1,
+        borderBottomWidth: 1,
+        borderBottomColor: "#D9D9D9",
     },
     infoRow: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: 8,
-        borderBottomWidth: 1,
+        paddingVertical: 5,
         borderBottomColor: "#f0f0f0",
     },
     infoLabel: {
         fontSize: 10,
-        color: "#333",
+        color: black,
         fontWeight: "500",
+        fontStyle:"medium"
     },
     infoValue: {
         fontSize: 10,
@@ -418,7 +430,7 @@ const styles = StyleSheet.create({
     },
     offerButton: {
         backgroundColor: TEAL,
-        paddingVertical: 16,
+        paddingVertical: 12,
         borderRadius: 30,
         alignItems: "center",
     },

@@ -42,6 +42,9 @@ const OfferModal = ({ visible, onClose, order }) => {
             style={styles.modalView} 
             animationIn="slideInUp"
             animationOut="slideOutDown"
+            animationInTiming={400}
+            animationOutTiming={400}
+            backdropOpacity={0.3}
         >
             <View style={styles.modalContainer}>
                 

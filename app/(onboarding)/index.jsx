@@ -22,7 +22,7 @@ const OnboardingScreen = () => {
   const router = useRouter();
   const slidesRef = useRef(null);
   const completeOnboarding = async () => {
-    router.replace('/(auth)/AuthScreen'); 
+    router.replace('/OTP'); 
   };
   const scrollToNext = () => {
     if (currentIndex < slides.length - 1) {

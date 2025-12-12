@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "700",
     // Note: If you use a custom font like "Inter", ensure it is loaded correctly.
     // fontFamily: "Inter", 
